@@ -9,8 +9,8 @@ public:
     GameObject();
     GameObject(std::string in_m_Name);
 
-    virtual std::string getPattern() = 0;
-    virtual void setPattern(std::string& in_pattern) = 0;
+    virtual std::wstring getPattern() = 0;
+    virtual void setPattern(std::wstring& in_pattern) = 0;
 
     virtual void setPos(short in_X, short in_Y) = 0;
     virtual std::array<short, 2> getPos() = 0;

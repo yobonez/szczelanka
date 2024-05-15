@@ -1,6 +1,7 @@
 #include <iostream>
 #include <windows.h>
 #include <memory>
+#include "TerminalEnginge.h"
 #include "VisualGameObject.h"
 #include "Player.h"
 
@@ -26,13 +27,20 @@ int main()
 //            }
 //    }
 
-    std::unique_ptr<GameObject> obj(new Player());
-    obj->setPos(3, 21);
-    auto objpos = obj->getPos();
-    for (auto cord : objpos) {
-        std::cout << " " << cord;
+//    std::unique_ptr<GameObject> obj(new Player());
+//    obj->setPos(3, 21);
+//    auto objpos = obj->getPos();
+//    for (auto cord : objpos) {
+//        std::cout << " " << cord;
+//    }
+//    std::cout << std::endl;
+//    std::cout << obj->name();
+
+    while(true) {
+        TerminalEngine game;
+        game.createScene();
+        game.draw();
+        Sleep(1000);
     }
-    std::cout << std::endl;
-    std::cout << obj->name();
     return 0;
 }

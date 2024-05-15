@@ -1,10 +1,10 @@
 #pragma once
 #include "VisualGameObject.h"
 
-class Player : public VisualGameObject {
+class Enemy : public VisualGameObject {
 private:
     unsigned short health;
 public:
-    Player();
+    Enemy();
     void setHealth(int in_Health);
 };

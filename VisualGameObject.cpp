@@ -15,9 +15,9 @@ void VisualGameObject::move(short& direction, short& rate, std::array<short, 2>&
     return;
 }
 
-void VisualGameObject::setPattern(std::string& in_pattern) {
+void VisualGameObject::setPattern(std::wstring& in_pattern) {
     m_pattern = in_pattern;
 }
-std::string VisualGameObject::getPattern() {
+std::wstring VisualGameObject::getPattern() {
     return m_pattern;
 }

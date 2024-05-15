@@ -1,5 +1,12 @@
 #include "Scene.h"
 
-Scene::Scene() : scr_H(30), scr_W(120) {
+Scene::Scene() {
+    player_exists = false;
+}
 
+void Scene::createPlayer() {
+    if (!player_exists)
+        m_GameObjects.emplace_back(new Player());
+        player_exists = true;
+    }
 }
