@@ -1,12 +1,21 @@
 #pragma once
 #include <iostream>
+#include <array>
 
 class GameObject {
 private:
-    short int x, y;
-    std::string name;
+    std::string m_Name;
 public:
     GameObject();
-    std::string ToString();
+    GameObject(std::string in_m_Name);
+
+    virtual std::string getPattern() = 0;
+    virtual void setPattern(std::string& in_pattern) = 0;
+
+    virtual void setPos(short in_X, short in_Y) = 0;
+    virtual std::array<short, 2> getPos() = 0;
+    virtual void move(short& direction, short& rate, std::array<short, 2>& destination) = 0;
+
+    virtual std::string name() const;
     virtual ~GameObject() = 0;
 };
