@@ -14,8 +14,15 @@ public:
 
     virtual void setPos(short in_X, short in_Y) = 0;
     virtual std::array<short, 2> getPos() = 0;
-    virtual void move(short& direction, short& rate, std::array<short, 2>& destination) = 0;
+    virtual void move(short& direction) = 0;
 
     virtual std::string name() const;
     virtual ~GameObject() = 0;
+
+    enum objectVelocityDirection {
+        RIGHT = 1<<0,
+        LEFT = 1<<1,
+        UP = 1<<2,
+        DOWN = 1<<3
+    };
 };

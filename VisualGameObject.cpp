@@ -11,8 +11,15 @@ std::array<short, 2> VisualGameObject::getPos() {
     return {m_X, m_Y};
 }
 
-void VisualGameObject::move(short& direction, short& rate, std::array<short, 2>& destination) {
-    return;
+void VisualGameObject::move(short& direction) {
+    std::array<short, 2> curr_pos = getPos();
+    short dx = 0, dy = 0;
+    if ((direction & objectVelocityDirection::RIGHT) != 0) dx += 1;
+    if ((direction & objectVelocityDirection::LEFT) != 0) dx -= 1;
+    if ((direction & objectVelocityDirection::UP) != 0) dy -= 1;
+    if ((direction & objectVelocityDirection::DOWN) != 0) dy += 1;
+
+    setPos(curr_pos[0] + dx, curr_pos[1] + dy);
 }
 
 void VisualGameObject::setPattern(std::wstring& in_pattern) {

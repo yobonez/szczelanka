@@ -9,11 +9,13 @@ private:
     wchar_t* canvas;
     HANDLE hConsole;
     unsigned int charsWritten;
+    void placePatternsOnCanvas();
+    void handleKeys();
+    void draw();
+//    short test = 0;
 
 public:
     TerminalEngine();
     void createScene();
-    void placePatternsOnCanvas();
     void tick();
-    void draw();
 };

@@ -5,7 +5,7 @@ Player::Player() : VisualGameObject("Player") {
 
     setPattern(pattern);
     setHealth(100);
-    setPos(0,0);
+    setPos(0,10);
 }
 void Player::setHealth(unsigned short in_Health) {
     health = in_Health;

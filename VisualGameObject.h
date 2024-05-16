@@ -15,7 +15,7 @@ public:
 
     virtual void setPos(short in_X, short in_Y);
     virtual std::array<short, 2> getPos();
-    virtual void move(short& direction, short& rate, std::array<short, 2>& destination);
+    virtual void move(short& direction);
 
     virtual void setHealth(unsigned short in_Health) = 0;
 };

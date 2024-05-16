@@ -40,9 +40,8 @@ int main()
     game.createScene();
 
     while(true) {
-        game.placePatternsOnCanvas();
-        game.draw();
-        Sleep(1000);
+        game.tick();
+        Sleep(33);
     }
     return 0;
 }
