@@ -36,9 +36,11 @@ int main()
 //    std::cout << std::endl;
 //    std::cout << obj->name();
 
+    TerminalEngine game;
+    game.createScene();
+
     while(true) {
-        TerminalEngine game;
-        game.createScene();
+        game.placePatternsOnCanvas();
         game.draw();
         Sleep(1000);
     }

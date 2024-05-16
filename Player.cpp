@@ -1,13 +1,13 @@
 #include "Player.h"
 
 Player::Player() : VisualGameObject("Player") {
-    std::wstring pattern = L"     #---\>` .//|#-->`::|||#-----|>` .\\|#-->`     #---/>";
+    std::wstring pattern = L"     #---\\>` .//|#-->`::|||#-----|>` .\\\\|#-->`     #---/>";
 
-    setHealth(100);
-    setPos(30,30);
     setPattern(pattern);
+    setHealth(100);
+    setPos(0,0);
 }
-void Player::setHealth(int in_Health) {
-
+void Player::setHealth(unsigned short in_Health) {
+    health = in_Health;
 }
 

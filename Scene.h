@@ -10,7 +10,7 @@ private:
     std::vector<GameObject*> m_GameObjects;
 public:
     Scene();
-    std::vector<GameObject*> get_GameObjects() { return m_GameObjects; }
+    std::vector<GameObject*>* get_GameObjects() { return &m_GameObjects; }
     void set_GameObjects(std::vector<GameObject*> in_GameObjects) { m_GameObjects = in_GameObjects; }
     void createPlayer();
 };

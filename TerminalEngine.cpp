@@ -13,15 +13,29 @@ void TerminalEngine::createScene() {
     scene.createPlayer();
 }
 
-void TerminalEngine::placePatternsOnCanvas(Scene& s) {
-    std::vector<GameObject*> objects = s.get_GameObjects();
-    // cordy trzeba
-    // cordy x,y rozbiæ na 1D i u¿yæ poni¿ej
-    for (int i = 0; i < objects.size()) {
+void TerminalEngine::placePatternsOnCanvas() {
+    std::vector<GameObject*>* objects = scene.get_GameObjects();
+    //std::vector<std::array<short,2>> objectsCoordinates;
 
-    }
-    for(int i = 0; i < pattern.length()) {
+    for (int i = 0; i < objects->size(); i++) {
+        std::array<short,2> objectCoordinates = (*objects)[i]->getPos();
+        short coord_1D = objectCoordinates[0] + scr_W * objectCoordinates[1];
 
+        std::wstring objectPattern = (*objects)[i]->getPattern();
+        size_t objectPatternLength = objectPattern.length();
+        short rowCount = 0;
+        short colCount = 0;
+        for(int i = 0; i < objectPatternLength; i++) {
+            if (objectPattern[i] != L'`') {
+                canvas[coord_1D + rowCount + (scr_W * colCount)] = objectPattern[i];
+                rowCount++;
+            }
+            else
+            {
+                colCount++;
+                rowCount = 0;
+            }
+        }
     }
 }
 

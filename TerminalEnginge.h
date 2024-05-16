@@ -13,7 +13,7 @@ private:
 public:
     TerminalEngine();
     void createScene();
-    void placePatternsOnCanvas(Scene& s);
+    void placePatternsOnCanvas();
     void tick();
     void draw();
 };

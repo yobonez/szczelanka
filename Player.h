@@ -6,5 +6,5 @@ private:
     unsigned short health;
 public:
     Player();
-    void setHealth(int in_Health);
+    void setHealth(unsigned short in_Health);
 };
