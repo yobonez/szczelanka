@@ -12,7 +12,6 @@ private:
     void placePatternsOnCanvas();
     void handleKeys();
     void draw();
-//    short test = 0;
 
 public:
     TerminalEngine();

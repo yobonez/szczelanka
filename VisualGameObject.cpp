@@ -25,6 +25,13 @@ void VisualGameObject::move(short& direction) {
 void VisualGameObject::setPattern(std::wstring& in_pattern) {
     m_pattern = in_pattern;
 }
+void VisualGameObject::setSize(short in_X, short in_Y) {
+    size_X = in_X;
+    size_Y = in_Y;
+}
+std::array<size_t, 2> VisualGameObject::getSize() {
+    return {size_X, size_Y};
+}
 std::wstring VisualGameObject::getPattern() {
     return m_pattern;
 }

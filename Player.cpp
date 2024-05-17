@@ -4,6 +4,7 @@ Player::Player() : VisualGameObject("Player") {
     std::wstring pattern = L"     #---\\>` .//|#-->`::|||#-----|>` .\\\\|#-->`     #---/>";
 
     setPattern(pattern);
+    setSize(13, 5);
     setHealth(100);
     setPos(0,10);
 }

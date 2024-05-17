@@ -2,7 +2,6 @@
 #include "TerminalEnginge.h"
 #include "GameObject.h"
 #include "Player.h"
-//#include <bitset>
 
 TerminalEngine::TerminalEngine() : scr_H(30), scr_W(120){
     hConsole = CreateConsoleScreenBuffer(GENERIC_READ | GENERIC_WRITE, 2, NULL, CONSOLE_TEXTMODE_BUFFER, NULL);
@@ -20,14 +19,26 @@ void TerminalEngine::placePatternsOnCanvas() {
     std::vector<GameObject*>* objects = scene.get_GameObjects();
 
     for (int i = 0; i < objects->size(); i++) {
-        std::array<short,2> objectCoordinates = (*objects)[i]->getPos();
+        GameObject* currentObject = (*objects)[i];
+
+        std::array<short, 2> objectCoordinates = currentObject->getPos();
         short coord_1D = objectCoordinates[0] + scr_W * objectCoordinates[1];
 
-        std::wstring objectPattern = (*objects)[i]->getPattern();
+        std::wstring objectPattern = currentObject->getPattern();
         size_t objectPatternLength = objectPattern.length();
+
+        std::array<size_t, 2> objectSizeXY = currentObject->getSize();
+
         short rowCount = 0;
         short colCount = 0;
-        for(int i = 0; i < objectPatternLength; i++) {
+        short patternUpSideLength = 0, patternDownSideLength = 0;
+
+        for (int Y = 0; Y <= objectSizeXY[1] + 1; Y++) {
+            for (int X = 0; X <= objectSizeXY[0] + 1; X++) {
+                canvas[coord_1D - scr_W - 1 + X + (scr_W * Y)] = L' ';
+            }
+        }
+        for (int i = 0; i < objectPatternLength; i++) {
             if (objectPattern[i] != L'`') {
                 canvas[coord_1D + rowCount + (scr_W * colCount)] = objectPattern[i];
                 rowCount++;
@@ -35,19 +46,12 @@ void TerminalEngine::placePatternsOnCanvas() {
             else
             {
                 colCount++;
+                if (colCount == 1) patternUpSideLength = rowCount;
+                patternDownSideLength = rowCount;
                 rowCount = 0;
             }
         }
     }
-    // czyscic jakos po sobie po poruszeniu sie obiektu
-
-//    std::bitset<16> x(test);
-//    std::string xxtest = x.to_string();
-//    std::wstring xtest(xxtest.length(), L' ');
-//    std::copy(xxtest.begin(), xxtest.end(), xtest.begin());
-//    for(int i = 0; i < xtest.length(); i++) {
-//        canvas[i] = xtest[i];
-//    }
 }
 
 void TerminalEngine::handleKeys() {
@@ -59,8 +63,6 @@ void TerminalEngine::handleKeys() {
     if (GetAsyncKeyState('D') & 0x8000) playerDirection |= GameObject::objectVelocityDirection::RIGHT;
 
     scene.forwardPlayerActions(playerDirection);
-
-    test = playerDirection;
 }
 
 void TerminalEngine::tick() {
