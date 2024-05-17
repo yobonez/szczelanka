@@ -13,6 +13,7 @@ void TerminalEngine::createScene() {
     canvas = new wchar_t[scr_W*scr_H];
 
     scene.createPlayer();
+    scene.createEnemy();
 }
 
 void TerminalEngine::placePatternsOnCanvas() {
@@ -67,7 +68,7 @@ void TerminalEngine::handleKeys() {
 
 void TerminalEngine::tick() {
     handleKeys();
-
+    // handleCollisions();
     draw();
 }
 

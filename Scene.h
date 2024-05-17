@@ -12,5 +12,6 @@ public:
     std::vector<GameObject*>* get_GameObjects() { return &m_GameObjects; }
     void set_GameObjects(std::vector<GameObject*> in_GameObjects) { m_GameObjects = in_GameObjects; }
     void createPlayer();
+    void createEnemy();
     void forwardPlayerActions(short& direction);
 };
