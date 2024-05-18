@@ -1,6 +1,6 @@
 #include "Enemy.h"
 
-Enemy::Enemy() : VisualGameObject("Enemy") {
+Enemy::Enemy() : VisualGameObject() {
     std::wstring pattern = L"  </--#`<|----#|:::`  <\\--#";
 
     setPattern(pattern);

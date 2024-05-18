@@ -1,10 +1,8 @@
 #include "GameObject.h"
 
-GameObject::GameObject() {
-    m_Name = "GameObject";
-}
+GameObject::GameObject() : m_Name("GameObject") { }
 
-std::string GameObject::name() const {
+std::string GameObject::getName() const {
     return m_Name;
 }
 

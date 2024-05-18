@@ -1,7 +1,6 @@
 #include "VisualGameObject.h"
 
 VisualGameObject::VisualGameObject() : GameObject("VisualGameObject") { }
-VisualGameObject::VisualGameObject(std::string in_Name) : GameObject(in_Name) { }
 
 void VisualGameObject::setPos(short in_X, short in_Y) {
     m_X = in_X;

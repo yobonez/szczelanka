@@ -18,7 +18,7 @@ public:
     virtual std::array<short, 2> getPos() = 0;
     virtual void move(short& direction) = 0;
 
-    virtual std::string name() const;
+    virtual std::string getName() const;
     virtual ~GameObject() = 0;
 
     enum objectVelocityDirection {

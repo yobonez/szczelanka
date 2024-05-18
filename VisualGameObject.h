@@ -9,7 +9,6 @@ private:
     short size_X, size_Y;
 public:
     VisualGameObject();
-    VisualGameObject(std::string in_Name);
 
     virtual std::wstring getPattern();
     virtual void setPattern(std::wstring& in_pattern);

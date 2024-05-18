@@ -2,6 +2,8 @@
 #include "TerminalEnginge.h"
 #include "GameObject.h"
 #include "Player.h"
+#include "Gun.h"
+#include "Utils.h"
 
 TerminalEngine::TerminalEngine() : scr_H(30), scr_W(120){
     hConsole = CreateConsoleScreenBuffer(GENERIC_READ | GENERIC_WRITE, 2, NULL, CONSOLE_TEXTMODE_BUFFER, NULL);
@@ -11,19 +13,21 @@ TerminalEngine::TerminalEngine() : scr_H(30), scr_W(120){
 
 void TerminalEngine::createScene() {
     canvas = new wchar_t[scr_W*scr_H];
+    std::vector<Gun*> plyGuns = {new Gun(2, 12)};
 
-    scene.createPlayer();
+    scene.createPlayer(plyGuns);
     scene.createEnemy();
 }
 
 void TerminalEngine::placePatternsOnCanvas() {
-    std::vector<GameObject*>* objects = scene.get_GameObjects();
+    std::vector<GameObject*>* objects = scene.get_GameObjects(); // mozliwy leak? - sprawdz Scene
 
     for (int i = 0; i < objects->size(); i++) {
         GameObject* currentObject = (*objects)[i];
+        if (currentObject->getName() != "VisualGameObject") continue;
 
         std::array<short, 2> objectCoordinates = currentObject->getPos();
-        short coord_1D = objectCoordinates[0] + scr_W * objectCoordinates[1];
+        short coord_1D = Utils::coord2DTo1D(objectCoordinates[0], objectCoordinates[1], scr_W);
 
         std::wstring objectPattern = currentObject->getPattern();
         size_t objectPatternLength = objectPattern.length();
@@ -34,6 +38,8 @@ void TerminalEngine::placePatternsOnCanvas() {
         short colCount = 0;
         short patternUpSideLength = 0, patternDownSideLength = 0;
 
+        // primitive clearing before rendering, so the terminal isn't gonna be cluttered with mess
+        // will make a better version if i'll have time
         for (int Y = 0; Y <= objectSizeXY[1] + 1; Y++) {
             for (int X = 0; X <= objectSizeXY[0] + 1; X++) {
                 canvas[coord_1D - scr_W - 1 + X + (scr_W * Y)] = L' ';
