@@ -68,6 +68,9 @@ void TerminalEngine::handleKeys() {
 
 void TerminalEngine::tick() {
     handleKeys();
+    // if objectName = "InvisibleObjectAttachable" then update pozycje czy coœtam etc
+    // TODO: USUN nazwy pochodnych z pochodnych z klas abstrakcyjnych, niech klasy pochodne maj¹ te¿ nazwy samych
+    // klas abstrakcyjnych, poniewa¿ wtedy bêdzie je mo¿na rozdzieliæ na RENDEROWALNE i NIERENDEROWALNE oraz na inne sposoby.
     // handleCollisions();
     draw();
 }
