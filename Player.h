@@ -11,5 +11,5 @@ public:
     void setHealth(unsigned short in_Health);
     void attachGun(Gun* gun);
     Player* refer();
-//    void shoot();
+    void shoot(short& in_controls);
 };

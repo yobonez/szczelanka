@@ -18,6 +18,6 @@ void Scene::createEnemy() {
 void Scene::forwardPlayerActions(short& in_controls) {
     if (!m_VisualGameObjects.empty()) {
         ply->move(in_controls);
-//        ply->shoot();
+        ply->shoot(in_controls);
     }
 }

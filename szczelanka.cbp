@@ -42,6 +42,8 @@
 		<Unit filename="GameObject.h" />
 		<Unit filename="Gun.cpp" />
 		<Unit filename="Gun.h" />
+		<Unit filename="InvisibleGameObject.cpp" />
+		<Unit filename="InvisibleGameObject.h" />
 		<Unit filename="Player.cpp" />
 		<Unit filename="Player.h" />
 		<Unit filename="Scene.cpp" />

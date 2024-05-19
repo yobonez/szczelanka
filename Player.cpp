@@ -16,7 +16,11 @@ void Player::attachGun(Gun* gun) {
 }
 Player* Player::refer() { return this; }
 
-//void Player::shoot() {
-//    guns->shoot(1);
-//}
+void Player::shoot(short& in_controls) {
+    if ((in_controls & controls::SHOOT) != 0){
+        for (Gun* gun : guns) {
+            gun->shoot(1);
+        }
+    }
+}
 
