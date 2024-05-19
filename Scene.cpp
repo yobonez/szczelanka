@@ -6,16 +6,18 @@ Scene::Scene() {
 }
 
 void Scene::createPlayer() {
-    m_GameObjects.emplace_back(new Player());
+    m_VisualGameObjects.emplace_back(new Player());
+    ply = (Player*)m_VisualGameObjects[0]->refer();
 }
 void Scene::createEnemy() {
     // difficulty? ez - 3, mid - 6, etc.
-    if (m_GameObjects.size() > 3) return;
-    m_GameObjects.emplace_back(new Enemy());
+    if (m_VisualGameObjects.size() > 3) return;
+    m_VisualGameObjects.emplace_back(new Enemy());
 }
 
-void Scene::forwardPlayerActions(short& direction) {
-    if (!m_GameObjects.empty()) {
-        m_GameObjects[0]->move(direction);
+void Scene::forwardPlayerActions(short& in_controls) {
+    if (!m_VisualGameObjects.empty()) {
+        ply->move(in_controls);
+//        ply->shoot();
     }
 }

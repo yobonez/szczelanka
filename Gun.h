@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include "VisualGameObject.h"
 #include "Emitter.h"
 #include "Bullet.h"
 
@@ -8,8 +9,7 @@ public:
     std::vector<Bullet*> bullets;
 
     Gun(VisualGameObject* in_ParentObj, short in_X, short in_Y);
-    void setEmitterRelativePos(short in_X, short in_Y);
-//    std::array<short, 2> getEmitterAbsolutePos(VisualGameObject& in_ParentObj);
+    void getParentAbsolutePos();
 
     void shoot(short speed);
 };

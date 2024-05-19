@@ -1,13 +1,12 @@
+#include "InvisibleGameObject.h"
 #include "VisualGameObject.h"
 
-class Emitter : public GameObject {
+class Emitter : public InvisibleGameObject {
 private:
+    short rel_X, rel_Y;
     VisualGameObject* parentObj;
 public:
     Emitter(VisualGameObject* in_ParentObj);
-    short parentAbs_X, parentAbs_Y, rel_X, rel_Y;
-    virtual void getParentAbsolutePos();
-    virtual std::array<short, 2> getEmitterAbsolutePos(VisualGameObject* in_ParentObj) = 0;
-    virtual void setEmitterRelativePos(short in_X, short in_Y) = 0;
-    virtual void emitProjectile() = 0;
+    virtual void setEmitterRelativePos(short in_X, short in_Y);
+    virtual std::array<short, 2> getEmitterAbsolutePos();
 };

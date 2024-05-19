@@ -7,7 +7,9 @@ private:
     unsigned short health;
     std::vector<Gun*> guns;
 public:
-    Player(std::vector<Gun*> in_Guns);
+    Player();
     void setHealth(unsigned short in_Health);
-    void shoot();
+    void attachGun(Gun* gun);
+    Player* refer();
+//    void shoot();
 };

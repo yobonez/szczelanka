@@ -1,11 +1,10 @@
-#pragma once
 #include "TerminalEnginge.h"
 #include "GameObject.h"
 #include "Player.h"
 #include "Gun.h"
 #include "Utils.h"
 
-TerminalEngine::TerminalEngine() : scr_H(30), scr_W(120){
+TerminalEngine::TerminalEngine() : scr_W(120), scr_H(30) {
     hConsole = CreateConsoleScreenBuffer(GENERIC_READ | GENERIC_WRITE, 2, NULL, CONSOLE_TEXTMODE_BUFFER, NULL);
     SetConsoleActiveScreenBuffer(hConsole);
     charsWritten = 0;
@@ -13,18 +12,19 @@ TerminalEngine::TerminalEngine() : scr_H(30), scr_W(120){
 
 void TerminalEngine::createScene() {
     canvas = new wchar_t[scr_W*scr_H];
-    std::vector<Gun*> plyGuns = {new Gun(2, 12)};
+//    Gun* plyGuns = new Gun((*visibleObjects)[0], 2, 12);
 
-    scene.createPlayer(plyGuns);
+    scene.createPlayer();
     scene.createEnemy();
+
+    visibleObjects = scene.get_GameObjects();
+    Player* ply = (Player*)(*visibleObjects)[0]->refer();
+    ply->attachGun(new Gun(ply, 2, 12));
 }
 
 void TerminalEngine::placePatternsOnCanvas() {
-    std::vector<GameObject*>* objects = scene.get_GameObjects(); // mozliwy leak? - sprawdz Scene
-
-    for (int i = 0; i < objects->size(); i++) {
-        GameObject* currentObject = (*objects)[i];
-        if (currentObject->getName() != "VisualGameObject") continue;
+    for (int i = 0; i < visibleObjects->size(); i++) {
+        VisualGameObject* currentObject = (*visibleObjects)[i];
 
         std::array<short, 2> objectCoordinates = currentObject->getPos();
         short coord_1D = Utils::coord2DTo1D(objectCoordinates[0], objectCoordinates[1], scr_W);
@@ -32,7 +32,7 @@ void TerminalEngine::placePatternsOnCanvas() {
         std::wstring objectPattern = currentObject->getPattern();
         size_t objectPatternLength = objectPattern.length();
 
-        std::array<size_t, 2> objectSizeXY = currentObject->getSize();
+        std::array<short, 2> objectSizeXY = currentObject->getSize();
 
         short rowCount = 0;
         short colCount = 0;
@@ -62,14 +62,16 @@ void TerminalEngine::placePatternsOnCanvas() {
 }
 
 void TerminalEngine::handleKeys() {
-    short playerDirection = 0;
+    short playerControls = 0;
 
-    if (GetAsyncKeyState('W') & 0x8000) playerDirection |= GameObject::objectVelocityDirection::UP;
-    if (GetAsyncKeyState('A') & 0x8000) playerDirection |= GameObject::objectVelocityDirection::LEFT;
-    if (GetAsyncKeyState('S') & 0x8000) playerDirection |= GameObject::objectVelocityDirection::DOWN;
-    if (GetAsyncKeyState('D') & 0x8000) playerDirection |= GameObject::objectVelocityDirection::RIGHT;
+    if (GetAsyncKeyState('W') & 0x8000) playerControls |= GameObject::controls::UP;
+    if (GetAsyncKeyState('A') & 0x8000) playerControls |= GameObject::controls::LEFT;
+    if (GetAsyncKeyState('S') & 0x8000) playerControls |= GameObject::controls::DOWN;
+    if (GetAsyncKeyState('D') & 0x8000) playerControls |= GameObject::controls::RIGHT;
 
-    scene.forwardPlayerActions(playerDirection);
+    if (GetAsyncKeyState(VK_SPACE) & 0x8000) playerControls |= GameObject::controls::SHOOT;
+
+    scene.forwardPlayerActions(playerControls);
 }
 
 void TerminalEngine::tick() {

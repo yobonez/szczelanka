@@ -13,11 +13,12 @@ public:
     virtual std::wstring getPattern();
     virtual void setPattern(std::wstring& in_pattern);
     virtual void setSize(short x, short y);
-    virtual std::array<size_t, 2> getSize();
+    virtual std::array<short, 2> getSize();
 
     virtual void setPos(short in_X, short in_Y);
     virtual std::array<short, 2> getPos();
     virtual void move(short& direction);
 
     virtual void setHealth(unsigned short in_Health) = 0;
+    virtual VisualGameObject* refer() = 0;
 };
