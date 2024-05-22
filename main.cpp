@@ -37,7 +37,7 @@ int main()
 //    std::cout << obj->name();
 
     TerminalEngine game;
-    game.createScene();
+    game.init();
 
     while(true) {
         game.tick();

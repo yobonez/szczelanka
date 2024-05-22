@@ -4,9 +4,11 @@
 
 class TerminalEngine {
 private:
+    short timer;
     short scr_W, scr_H;
     Scene scene;
     std::vector<VisualGameObject*>* visibleObjects;
+    std::vector<InvisibleGameObject*>* invisibleObjects;
     wchar_t* canvas;
     HANDLE hConsole;
     unsigned int charsWritten;
@@ -14,8 +16,10 @@ private:
     void handleKeys();
     void draw();
 
+    void doEvents();
+
 public:
     TerminalEngine();
-    void createScene();
+    void init();
     void tick();
 };

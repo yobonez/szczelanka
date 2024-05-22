@@ -10,16 +10,26 @@ TerminalEngine::TerminalEngine() : scr_W(120), scr_H(30) {
     charsWritten = 0;
 }
 
-void TerminalEngine::createScene() {
+void TerminalEngine::init() {
+    timer = 0;
     canvas = new wchar_t[scr_W*scr_H];
-//    Gun* plyGuns = new Gun((*visibleObjects)[0], 2, 12);
 
     scene.createPlayer();
-    scene.createEnemy();
 
-    visibleObjects = scene.get_GameObjects();
-    Player* ply = (Player*)(*visibleObjects)[0]->refer();
-    ply->attachGun(new Gun(ply, 2, 12));
+    visibleObjects = scene.get_PtrVisibleGameObjects();
+//    Player* ply = (Player*)(*visibleObjects)[0]->refer();
+    // "attachGun" -> "gunOwner"
+    // invisibleObj array to Scene class
+    // make a method(?) or another way to update both inv and visibile objects??????????
+    // TIMERS!!! we cant spam every 33ms with bullets when we shoot, make timers
+    // bullet ?queue?
+//    ply->attachGun(new Gun(ply, 2, 12));
+}
+
+void TerminalEngine::doEvents() {
+    if(timer % 50 == 0) {
+        scene.createEnemy();
+    }
 }
 
 void TerminalEngine::placePatternsOnCanvas() {
@@ -74,11 +84,15 @@ void TerminalEngine::handleKeys() {
     scene.forwardPlayerActions(playerControls);
 }
 
+// TODO: void handleMovement - playerControls jako pole w TerminalEngine i tak samo dla enemy
+
 void TerminalEngine::tick() {
+    timer++;
+    if (timer > 50) { timer = 0; }
+
     handleKeys();
+    doEvents();
     // if objectName = "InvisibleObjectAttachable" then update pozycje czy coœtam etc
-    // TODO: USUN nazwy pochodnych z pochodnych z klas abstrakcyjnych, niech klasy pochodne maj¹ te¿ nazwy samych
-    // klas abstrakcyjnych, poniewa¿ wtedy bêdzie je mo¿na rozdzieliæ na RENDEROWALNE i NIERENDEROWALNE oraz na inne sposoby.
     // handleCollisions();
     draw();
 }

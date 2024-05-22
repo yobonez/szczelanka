@@ -10,9 +10,11 @@ class Scene {
 private:
     Player* ply;
     std::vector<VisualGameObject*> m_VisualGameObjects;
+    std::vector<InvisibleGameObject*> m_InvisibleGameObjects;
 public:
     Scene();
-    std::vector<VisualGameObject*>* get_GameObjects() { return &m_VisualGameObjects; }
+    std::vector<VisualGameObject*>* get_PtrVisibleGameObjects() { return &m_VisualGameObjects; }
+    std::vector<InvisibleGameObject*>* get_PtrInvisibleGameObjects() { return &m_InvisibleGameObjects; }
     void set_GameObjects(std::vector<VisualGameObject*> in_VisualGameObjects) { m_VisualGameObjects = in_VisualGameObjects; }
     void createPlayer();
     void createEnemy();

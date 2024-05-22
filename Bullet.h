@@ -1,3 +1,4 @@
+#pragma once
 #include "VisualGameObject.h"
 
 class Bullet : public VisualGameObject {

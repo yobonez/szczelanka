@@ -12,5 +12,6 @@ void Emitter::setEmitterRelativePos(short in_X, short in_Y){
 std::array<short, 2> Emitter::getEmitterAbsolutePos()
 {
     std::array<short, 2> parentPos = parentObj->getPos();
+
     return {parentPos[0] + rel_X, parentPos[1] + rel_Y};
 }
