@@ -14,6 +14,7 @@ private:
     unsigned int charsWritten;
     void placePatternsOnCanvas();
     void handleKeys();
+    void handleMovement();
     void draw();
 
     void doEvents();

@@ -11,6 +11,7 @@ private:
     void attachGun(Gun* gun);
 public:
     Player();
+    void setPredefControls(short& in_controls);
     void setHealth(unsigned short in_Health);
     Player* refer();
     std::vector<Bullet*>* shoot(short& in_controls);

@@ -5,6 +5,7 @@
 class GameObject {
 private:
     std::string m_Name;
+    std::string m_detailedName;
 public:
     GameObject();
     GameObject(std::string in_m_Name);
@@ -13,6 +14,8 @@ public:
     virtual std::array<short, 2> getPos() = 0;
 
     virtual std::string getName() const;
+    virtual std::string getDetailedName() const;
+    virtual void setDetailedName(std::string in_DetailedName);
     virtual ~GameObject() = 0;
 
     enum controls {

@@ -83,8 +83,15 @@ void TerminalEngine::handleKeys() {
 
     scene.forwardPlayerActions(playerControls);
 }
-
-// TODO: void handleMovement - playerControls jako pole w TerminalEngine i tak samo dla enemy
+// - playerControls jako pole w TerminalEngine i tak samo dla enemy
+void TerminalEngine::handleMovement(){
+    for(VisualGameObject* obj : *visibleObjects) {
+        if(obj->getDetailedName() == "Bullet") {
+            short direction = 0;
+            obj->move(direction);
+        }
+    }
+}
 
 void TerminalEngine::tick() {
     timer++;
@@ -92,6 +99,7 @@ void TerminalEngine::tick() {
 
     handleKeys();
     doEvents();
+    handleMovement();
     // if objectName = "InvisibleObjectAttachable" then update pozycje czy coœtam etc
     // handleCollisions();
     draw();

@@ -7,6 +7,7 @@ private:
     short m_X, m_Y;
     std::wstring m_pattern;
     short size_X, size_Y;
+    short m_predefControls;
 public:
     VisualGameObject();
 
@@ -19,6 +20,7 @@ public:
     virtual std::array<short, 2> getPos();
     virtual void move(short& in_controls);
 
+    virtual void setPredefControls(short& in_controls) = 0;
     virtual void setHealth(unsigned short in_Health) = 0;
     virtual VisualGameObject* refer() = 0;
 };

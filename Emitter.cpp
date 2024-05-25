@@ -2,7 +2,7 @@
 #include "Emitter.h"
 #include "Utils.h"
 
-Emitter::Emitter(VisualGameObject* in_ParentObj) : InvisibleGameObject(),  parentObj(in_ParentObj) {}
+Emitter::Emitter(VisualGameObject* in_ParentObj) : InvisibleGameObject(),  parentObj(in_ParentObj) { setDetailedName("Emitter"); }
 
 void Emitter::setEmitterRelativePos(short in_X, short in_Y){
     rel_X = in_X;

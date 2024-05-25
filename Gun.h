@@ -11,5 +11,5 @@ public:
     Gun(VisualGameObject* in_ParentObj, short in_X, short in_Y);
     void getParentAbsolutePos();
 
-    Bullet* shoot(short speed);
+    Bullet* shoot(short in_Direction);
 };
