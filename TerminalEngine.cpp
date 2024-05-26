@@ -1,8 +1,10 @@
+#pragma once
 #include "TerminalEnginge.h"
 #include "GameObject.h"
 #include "Player.h"
 #include "Gun.h"
 #include "Utils.h"
+#include <algorithm>
 
 TerminalEngine::TerminalEngine() : scr_W(120), scr_H(30) {
     hConsole = CreateConsoleScreenBuffer(GENERIC_READ | GENERIC_WRITE, 2, NULL, CONSOLE_TEXTMODE_BUFFER, NULL);
@@ -30,6 +32,7 @@ void TerminalEngine::doEvents() {
     if(timer % 50 == 0) {
         scene.createEnemy();
     }
+    if (timer % 10 == 0) handleMovement();
 }
 
 void TerminalEngine::placePatternsOnCanvas() {
@@ -79,27 +82,32 @@ void TerminalEngine::handleKeys() {
     if (GetAsyncKeyState('S') & 0x8000) playerControls |= GameObject::controls::DOWN;
     if (GetAsyncKeyState('D') & 0x8000) playerControls |= GameObject::controls::RIGHT;
 
-    if (GetAsyncKeyState(VK_SPACE) & 0x8000) playerControls |= GameObject::controls::SHOOT;
+    if ((timer % 10 == 0) && (GetAsyncKeyState(VK_SPACE) & 0x8000)) playerControls |= GameObject::controls::SHOOT;
 
     scene.forwardPlayerActions(playerControls);
 }
+
 // - playerControls jako pole w TerminalEngine i tak samo dla enemy
 void TerminalEngine::handleMovement(){
-    for(VisualGameObject* obj : *visibleObjects) {
-        if(obj->getDetailedName() == "Bullet") {
-            short direction = 0;
-            obj->move(direction);
-        }
-    }
+    short direction = 0;
+//    (*visibleObjects)[1]->move(direction);
+//    (*visibleObjects)[2]->move(direction);
+//    (*visibleObjects)[3]->move(direction);
+//    for(int i = 0; i < visibleObjects->size(); i++) {
+//        if(((*visibleObjects)[i]->getDetailedName()) == "Bullet") {
+//            (*visibleObjects)[i]->move(direction);
+//        }
+//    }
+// CZEMU MOGE W PETLI Z CONST LIMITEM PRZESUWAC O KRATKE TAK JAK TO MA MOVE() ROBIC,
+// ALE COMPILE-TIME LIMITEM JUZ COS SIE WALI TOTALNIE??????????????????????????????????
 }
 
 void TerminalEngine::tick() {
     timer++;
-    if (timer > 50) { timer = 0; }
+    if (timer >= 50) { timer = 0; }
 
     handleKeys();
     doEvents();
-    handleMovement();
     // if objectName = "InvisibleObjectAttachable" then update pozycje czy coœtam etc
     // handleCollisions();
     draw();

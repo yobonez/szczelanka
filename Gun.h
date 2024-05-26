@@ -6,8 +6,6 @@
 
 class Gun : public Emitter {
 public:
-//    std::vector<Bullet*> bullets;
-
     Gun(VisualGameObject* in_ParentObj, short in_X, short in_Y);
     void getParentAbsolutePos();
 

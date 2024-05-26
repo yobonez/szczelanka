@@ -10,6 +10,10 @@ std::array<short, 2> VisualGameObject::getPos() {
     return {m_X, m_Y};
 }
 
+void VisualGameObject::setPredefControls(short& in_controls) {
+    m_predefControls = in_controls;
+}
+
 void VisualGameObject::move(short& in_controls) {
     short controls = 0;
     if (in_controls != 0) controls = in_controls;
@@ -24,10 +28,6 @@ void VisualGameObject::move(short& in_controls) {
     if ((controls & controls::DOWN) != 0) dy += 1;
 
     setPos(curr_pos[0] + dx, curr_pos[1] + dy);
-}
-
-void VisualGameObject::setPredefControls(short& in_controls) {
-    m_predefControls = in_controls;
 }
 
 void VisualGameObject::setPattern(std::wstring& in_pattern) {

@@ -4,7 +4,7 @@
 class Bullet : public VisualGameObject {
 private:
     unsigned short health;
-    void setPredefControls(short& in_controls);
+    short m_predefControls;
     void setHealth(unsigned short in_Health);
     Bullet* refer();
 public:

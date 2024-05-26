@@ -5,9 +5,9 @@
 class Enemy : public VisualGameObject {
 private:
     unsigned short health;
+    short m_predefControls;
 public:
     Enemy();
-    void setPredefControls(short& in_controls);
     void setHealth(unsigned short in_Health);
     Enemy* refer();
 };

@@ -17,10 +17,6 @@ void Player::attachGun(Gun* gun) {
     guns.emplace_back(gun);
 }
 
-void Player::setPredefControls(short& in_controls) {
-    return;
-}
-
 void Player::setHealth(unsigned short in_Health) {
     health = in_Health;
 }
