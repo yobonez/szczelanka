@@ -11,7 +11,7 @@ private:
     std::vector<InvisibleGameObject*>* invisibleObjects;
     wchar_t* canvas;
     HANDLE hConsole;
-    unsigned int charsWritten;
+    DWORD charsWritten;
     void placePatternsOnCanvas();
     void handleKeys();
     void handleMovement();

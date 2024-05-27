@@ -14,7 +14,7 @@ TerminalEngine::TerminalEngine() : scr_W(120), scr_H(30) {
 
 void TerminalEngine::init() {
     timer = 0;
-    canvas = new wchar_t[scr_W*scr_H];
+    canvas = new wchar_t[scr_W*scr_H]();
 
     scene.createPlayer();
 
@@ -87,20 +87,37 @@ void TerminalEngine::handleKeys() {
     scene.forwardPlayerActions(playerControls);
 }
 
-// - playerControls jako pole w TerminalEngine i tak samo dla enemy
 void TerminalEngine::handleMovement(){
     short direction = 0;
 //    (*visibleObjects)[1]->move(direction);
 //    (*visibleObjects)[2]->move(direction);
 //    (*visibleObjects)[3]->move(direction);
-//    for(int i = 0; i < visibleObjects->size(); i++) {
-//        if(((*visibleObjects)[i]->getDetailedName()) == "Bullet") {
-//            (*visibleObjects)[i]->move(direction);
-//        }
+
+
+//    for(VisualGameObject* obj : *visibleObjects) {
+//        if (obj->getDetailedName() != "Bullet") continue;
+//        obj->move(direction);
 //    }
+
+    Utils::debugMsg(std::to_string(visibleObjects->size()), canvas);
+//    for(int i = 0; i < visibleObjects->size(); i++) {
+//        VisualGameObject* obj = (*visibleObjects)[i];
+//        if (obj->getDetailedName() != "Bullet") continue;
+//        obj->move(direction);
+//    }
+//    for(int i = 0; i < std::distance(visibleObjects->begin(), visibleObjects->end()); i++) {
+//        VisualGameObject* obj = (*visibleObjects)[i];
+//        if (obj->getDetailedName() != "Bullet") continue;
+//        obj->move(direction);
+//    }
+//    for(int i = 0; i < 4; i++) {
+//        VisualGameObject* obj = (*visibleObjects)[i];
+//        if (obj->getDetailedName() != "Bullet") continue;
+//        obj->move(direction);
+//    }
+}
 // CZEMU MOGE W PETLI Z CONST LIMITEM PRZESUWAC O KRATKE TAK JAK TO MA MOVE() ROBIC,
 // ALE COMPILE-TIME LIMITEM JUZ COS SIE WALI TOTALNIE??????????????????????????????????
-}
 
 void TerminalEngine::tick() {
     timer++;
