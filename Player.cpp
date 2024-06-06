@@ -21,8 +21,6 @@ void Player::setHealth(unsigned short in_Health) {
     health = in_Health;
 }
 
-Player* Player::refer() { return this; }
-
 std::vector<Bullet*>* Player::shoot(short& in_controls) {
     if ((in_controls & controls::SHOOT) != 0){
         for (Gun* gun : guns) {
@@ -31,4 +29,6 @@ std::vector<Bullet*>* Player::shoot(short& in_controls) {
     }
     return &bullets;
 }
+
+Player* Player::refer() { return this; }
 

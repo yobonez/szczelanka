@@ -1,8 +1,11 @@
 #include "VisualGameObject.h"
 
 extern short timer;
+extern short visObjectCount;
 
-VisualGameObject::VisualGameObject() : GameObject("VisualGameObject"), m_predefControls(0) { }
+VisualGameObject::VisualGameObject() : GameObject("VisualGameObject"), m_predefControls(0) {
+    id = visObjectCount;
+}
 
 void VisualGameObject::setPos(short in_X, short in_Y) {
     m_X = in_X;

@@ -4,6 +4,7 @@
 
 class VisualGameObject : public GameObject {
 private:
+    short id;
     short m_X, m_Y;
     std::wstring m_pattern;
     short size_X, size_Y;

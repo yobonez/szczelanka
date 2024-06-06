@@ -4,7 +4,6 @@
 
 class TerminalEngine {
 private:
-//    short timer;
     short scr_W, scr_H;
     short playerControls;
     Scene scene;
@@ -16,6 +15,7 @@ private:
     void placePatternsOnCanvas();
     void handleKeys();
     void handleMovement();
+    void handleCollisions();
     void draw();
 
     void doEvents();

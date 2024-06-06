@@ -2,12 +2,14 @@
 #include "TerminalEnginge.h"
 #include "GameObject.h"
 #include "Player.h"
+#include "Enemy.h"
 #include "Gun.h"
 #include "Utils.h"
 #include <algorithm>
 #include <bitset>
 
 short timer = 0;
+short visObjectCount = 0;
 
 TerminalEngine::TerminalEngine() : scr_W(120), scr_H(30) {
     hConsole = CreateConsoleScreenBuffer(GENERIC_READ | GENERIC_WRITE, 2, NULL, CONSOLE_TEXTMODE_BUFFER, NULL);
@@ -27,6 +29,18 @@ void TerminalEngine::init() {
 void TerminalEngine::doEvents() {
     if(timer % 50 == 0) {
         scene.createEnemy();
+    }
+    if (timer % 30 == 0) {
+        // other plan - move bullet collecting from "forwardPlayerActions" (bruh), to some part of rendering code here or smth
+        // and: PLAYER, gimme initialized bullets arr ->(concat) bulletsToRenderArr
+        //      ENEMY , gimme initialized bullets arr ->(concat) bulletsToRenderArr
+        // m_VisualObjects.emplace_back(bulletsToRenderArr);
+        for(VisualGameObject* obj : *visibleObjects) {
+            if(obj->getDetailedName() == "Enemy") {
+                Enemy* enemy = (Enemy*)obj->refer();
+                enemy->shoot();
+            }
+        }
     }
 }
 
@@ -90,19 +104,24 @@ void TerminalEngine::handleMovement(){
     }
 
     std::bitset<16> binDirection(playerControls);
-    std::string debugStr = "Controls: " + binDirection.to_string() + " | " + std::to_string(visibleObjects->size());
+    std::string debugStr = "Controls: " + binDirection.to_string() + " | " + std::to_string(visObjectCount);
 
     Utils::debugDisplay(debugStr, canvas);
 }
 
+void TerminalEngine::handleCollisions() {
+
+}
+
 void TerminalEngine::tick() {
+    visObjectCount = visibleObjects->size();
     timer++;
     if (timer >= 50) { timer = 0; }
 
     handleKeys();
     handleMovement();
     doEvents();
-    // handleCollisions();
+    handleCollisions();
     draw();
 }
 
