@@ -89,35 +89,13 @@ void TerminalEngine::handleKeys() {
 
 void TerminalEngine::handleMovement(){
     short direction = 0;
-//    (*visibleObjects)[1]->move(direction);
-//    (*visibleObjects)[2]->move(direction);
-//    (*visibleObjects)[3]->move(direction);
-
-
-//    for(VisualGameObject* obj : *visibleObjects) {
-//        if (obj->getDetailedName() != "Bullet") continue;
-//        obj->move(direction);
-//    }
+    for(VisualGameObject* obj : *visibleObjects) {
+        if (obj->getDetailedName() != "Bullet") continue;
+        obj->move(direction);
+    }
 
     Utils::debugMsg(std::to_string(visibleObjects->size()), canvas);
-//    for(int i = 0; i < visibleObjects->size(); i++) {
-//        VisualGameObject* obj = (*visibleObjects)[i];
-//        if (obj->getDetailedName() != "Bullet") continue;
-//        obj->move(direction);
-//    }
-//    for(int i = 0; i < std::distance(visibleObjects->begin(), visibleObjects->end()); i++) {
-//        VisualGameObject* obj = (*visibleObjects)[i];
-//        if (obj->getDetailedName() != "Bullet") continue;
-//        obj->move(direction);
-//    }
-//    for(int i = 0; i < 4; i++) {
-//        VisualGameObject* obj = (*visibleObjects)[i];
-//        if (obj->getDetailedName() != "Bullet") continue;
-//        obj->move(direction);
-//    }
 }
-// CZEMU MOGE W PETLI Z CONST LIMITEM PRZESUWAC O KRATKE TAK JAK TO MA MOVE() ROBIC,
-// ALE COMPILE-TIME LIMITEM JUZ COS SIE WALI TOTALNIE??????????????????????????????????
 
 void TerminalEngine::tick() {
     timer++;
@@ -125,7 +103,7 @@ void TerminalEngine::tick() {
 
     handleKeys();
     doEvents();
-    // if objectName = "InvisibleObjectAttachable" then update pozycje czy coútam etc
+    // if objectName = "InvisibleObjectAttachable" then update pozycje czy co≈ìtam etc
     // handleCollisions();
     draw();
 }
