@@ -1,5 +1,7 @@
 #include "VisualGameObject.h"
 
+extern short timer;
+
 VisualGameObject::VisualGameObject() : GameObject("VisualGameObject"), m_predefControls(0) { }
 
 void VisualGameObject::setPos(short in_X, short in_Y) {
@@ -14,20 +16,22 @@ void VisualGameObject::setPredefControls(short& in_controls) {
     m_predefControls = in_controls;
 }
 
-void VisualGameObject::move(short& in_controls) {
-    short controls = 0;
-    if (in_controls != 0) controls = in_controls;
-    else if (m_predefControls != 0) controls = m_predefControls;
-    else return;
+void VisualGameObject::move(short& in_controls, short interval) {
+    if (timer % interval == 0){
+        short controls = 0;
+        if (in_controls != 0) controls = in_controls;
+        else if (m_predefControls != 0) controls = m_predefControls;
+        else return;
 
-    std::array<short, 2> curr_pos = getPos();
-    short dx = 0, dy = 0;
-    if ((controls & controls::RIGHT) != 0) dx += 1;
-    if ((controls & controls::LEFT) != 0) dx -= 1;
-    if ((controls & controls::UP) != 0) dy -= 1;
-    if ((controls & controls::DOWN) != 0) dy += 1;
+        std::array<short, 2> curr_pos = getPos();
+        short dx = 0, dy = 0;
+        if ((controls & controls::RIGHT) != 0) dx += 1;
+        if ((controls & controls::LEFT) != 0) dx -= 1;
+        if ((controls & controls::UP) != 0) dy -= 1;
+        if ((controls & controls::DOWN) != 0) dy += 1;
 
-    setPos(curr_pos[0] + dx, curr_pos[1] + dy);
+        setPos(curr_pos[0] + dx, curr_pos[1] + dy);
+    }
 }
 
 void VisualGameObject::setPattern(std::wstring& in_pattern) {

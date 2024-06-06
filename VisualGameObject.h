@@ -19,7 +19,7 @@ public:
     virtual void setPos(short in_X, short in_Y);
     virtual std::array<short, 2> getPos();
     virtual void setPredefControls(short& in_controls);
-    virtual void move(short& in_controls);
+    virtual void move(short& in_controls, short interval);
 
     virtual void setHealth(unsigned short in_Health) = 0;
     virtual VisualGameObject* refer() = 0;

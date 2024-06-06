@@ -5,6 +5,9 @@
 #include "Gun.h"
 #include "Utils.h"
 #include <algorithm>
+#include <bitset>
+
+short timer = 0;
 
 TerminalEngine::TerminalEngine() : scr_W(120), scr_H(30) {
     hConsole = CreateConsoleScreenBuffer(GENERIC_READ | GENERIC_WRITE, 2, NULL, CONSOLE_TEXTMODE_BUFFER, NULL);
@@ -19,20 +22,12 @@ void TerminalEngine::init() {
     scene.createPlayer();
 
     visibleObjects = scene.get_PtrVisibleGameObjects();
-//    Player* ply = (Player*)(*visibleObjects)[0]->refer();
-    // "attachGun" -> "gunOwner"
-    // invisibleObj array to Scene class
-    // make a method(?) or another way to update both inv and visibile objects??????????
-    // TIMERS!!! we cant spam every 33ms with bullets when we shoot, make timers
-    // bullet ?queue?
-//    ply->attachGun(new Gun(ply, 2, 12));
 }
 
 void TerminalEngine::doEvents() {
     if(timer % 50 == 0) {
         scene.createEnemy();
     }
-    if (timer % 10 == 0) handleMovement();
 }
 
 void TerminalEngine::placePatternsOnCanvas() {
@@ -75,7 +70,7 @@ void TerminalEngine::placePatternsOnCanvas() {
 }
 
 void TerminalEngine::handleKeys() {
-    short playerControls = 0;
+    playerControls = 0;
 
     if (GetAsyncKeyState('W') & 0x8000) playerControls |= GameObject::controls::UP;
     if (GetAsyncKeyState('A') & 0x8000) playerControls |= GameObject::controls::LEFT;
@@ -90,11 +85,14 @@ void TerminalEngine::handleKeys() {
 void TerminalEngine::handleMovement(){
     short direction = 0;
     for(VisualGameObject* obj : *visibleObjects) {
-        if (obj->getDetailedName() != "Bullet") continue;
-        obj->move(direction);
+        if (obj->getDetailedName() == "Bullet") obj->move(direction, 1);
+        if (obj->getDetailedName() == "Enemy") obj->move(direction, 5);
     }
 
-    Utils::debugMsg(std::to_string(visibleObjects->size()), canvas);
+    std::bitset<16> binDirection(playerControls);
+    std::string debugStr = "Controls: " + binDirection.to_string() + " | " + std::to_string(visibleObjects->size());
+
+    Utils::debugDisplay(debugStr, canvas);
 }
 
 void TerminalEngine::tick() {
@@ -102,8 +100,8 @@ void TerminalEngine::tick() {
     if (timer >= 50) { timer = 0; }
 
     handleKeys();
+    handleMovement();
     doEvents();
-    // if objectName = "InvisibleObjectAttachable" then update pozycje czy coœtam etc
     // handleCollisions();
     draw();
 }

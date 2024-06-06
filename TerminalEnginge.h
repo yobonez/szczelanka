@@ -4,8 +4,9 @@
 
 class TerminalEngine {
 private:
-    short timer;
+//    short timer;
     short scr_W, scr_H;
+    short playerControls;
     Scene scene;
     std::vector<VisualGameObject*>* visibleObjects;
     std::vector<InvisibleGameObject*>* invisibleObjects;
