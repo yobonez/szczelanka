@@ -14,5 +14,5 @@ public:
     Enemy();
     void setHealth(unsigned short in_Health);
     Enemy* refer();
-    std::vector<Bullet*>* shoot();
+    void shoot(std::vector<VisualGameObject*>* bulletContainer);
 };

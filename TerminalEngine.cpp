@@ -30,16 +30,10 @@ void TerminalEngine::doEvents() {
     if(timer % 50 == 0) {
         scene.createEnemy();
     }
-    if (timer % 30 == 0) {
-        // other plan - move bullet collecting from "forwardPlayerActions" (bruh), to some part of rendering code here or smth
-        // and: PLAYER, gimme initialized bullets arr ->(concat) bulletsToRenderArr
-        //      ENEMY , gimme initialized bullets arr ->(concat) bulletsToRenderArr
-        // m_VisualObjects.emplace_back(bulletsToRenderArr);
-        for(VisualGameObject* obj : *visibleObjects) {
-            if(obj->getDetailedName() == "Enemy") {
-                Enemy* enemy = (Enemy*)obj->refer();
-                enemy->shoot();
-            }
+    for(VisualGameObject* obj : *visibleObjects) {
+        if(obj->getDetailedName() == "Enemy") {
+            Enemy* enemy = (Enemy*)obj->refer();
+            enemy->shoot(visibleObjects);
         }
     }
 }
@@ -58,7 +52,7 @@ void TerminalEngine::placePatternsOnCanvas() {
 
         short rowCount = 0;
         short colCount = 0;
-        short patternUpSideLength = 0, patternDownSideLength = 0;
+//        short patternUpSideLength = 0, patternDownSideLength = 0;
 
         // primitive clearing before rendering, so the terminal isn't gonna be cluttered with mess
         // will make a better version if i'll have time
@@ -75,8 +69,8 @@ void TerminalEngine::placePatternsOnCanvas() {
             else
             {
                 colCount++;
-                if (colCount == 1) patternUpSideLength = rowCount;
-                patternDownSideLength = rowCount;
+//                if (colCount == 1) patternUpSideLength = rowCount;
+//                patternDownSideLength = rowCount;
                 rowCount = 0;
             }
         }
@@ -91,7 +85,7 @@ void TerminalEngine::handleKeys() {
     if (GetAsyncKeyState('S') & 0x8000) playerControls |= GameObject::controls::DOWN;
     if (GetAsyncKeyState('D') & 0x8000) playerControls |= GameObject::controls::RIGHT;
 
-    if ((timer % 10 == 0) && (GetAsyncKeyState(VK_SPACE) & 0x8000)) playerControls |= GameObject::controls::SHOOT;
+    if (GetAsyncKeyState(VK_SPACE) & 0x8000) playerControls |= GameObject::controls::SHOOT;
 
     scene.forwardPlayerActions(playerControls);
 }
@@ -114,14 +108,14 @@ void TerminalEngine::handleCollisions() {
 }
 
 void TerminalEngine::tick() {
-    visObjectCount = visibleObjects->size();
     timer++;
     if (timer >= 50) { timer = 0; }
 
+    visObjectCount = visibleObjects->size();
     handleKeys();
     handleMovement();
-    doEvents();
     handleCollisions();
+    doEvents();
     draw();
 }
 

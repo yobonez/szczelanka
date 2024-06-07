@@ -9,9 +9,9 @@ Player::Player() : VisualGameObject() { // sprawdz se potem czy mozesz po refere
     setHealth(100);
     setPos(0,10);
 
-    attachGun(new Gun(this, 10, 0));
-    attachGun(new Gun(this, 12, 2));
-    attachGun(new Gun(this, 10, 4));
+    attachGun(new Gun(this, 10, 0, 26));
+    attachGun(new Gun(this, 12, 2, 26));
+    attachGun(new Gun(this, 10, 4, 26));
 }
 void Player::attachGun(Gun* gun) {
     guns.emplace_back(gun);
@@ -21,13 +21,13 @@ void Player::setHealth(unsigned short in_Health) {
     health = in_Health;
 }
 
-std::vector<Bullet*>* Player::shoot(short& in_controls) {
+void Player::shoot(short& in_controls, std::vector<VisualGameObject*>* bulletContainer) {
     if ((in_controls & controls::SHOOT) != 0){
         for (Gun* gun : guns) {
-            bullets.emplace_back(gun->shoot(GameObject::controls::RIGHT));
+            Bullet* bullet = gun->shoot(GameObject::controls::RIGHT);
+            if (bullet != nullptr) bulletContainer->emplace_back(bullet);
         }
     }
-    return &bullets;
 }
 
 Player* Player::refer() { return this; }

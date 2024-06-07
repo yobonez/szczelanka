@@ -18,13 +18,6 @@ void Scene::createEnemy() {
 void Scene::forwardPlayerActions(short& in_controls) {
     if (!m_VisualGameObjects.empty()) {
         ply->move(in_controls, 2);
-
-        std::vector<Bullet*>* bulletsToRender = ply->shoot(in_controls);
-        if (!bulletsToRender->empty()){
-            for (Bullet* bullet : *bulletsToRender) {
-                m_VisualGameObjects.emplace_back(bullet);
-            }
-            bulletsToRender->clear(); // just one line to fix a bug, nice
-        }
+        ply->shoot(in_controls, &m_VisualGameObjects);
     }
 }

@@ -16,7 +16,7 @@ Enemy::Enemy() : VisualGameObject() {
     short rnd_Y = (rand() % 10) + 10;
     setPos(rnd_X, rnd_Y);
 
-    attachGun(new Gun(this, 0, 1));
+    attachGun(new Gun(this, 0, 1, 26));
 }
 
 void Enemy::attachGun(Gun* gun) {
@@ -27,11 +27,11 @@ void Enemy::setHealth(unsigned short in_Health) {
     health = in_Health;
 }
 
-std::vector<Bullet*>* Enemy::shoot() {
+void Enemy::shoot(std::vector<VisualGameObject*>* bulletContainer) {
     for (Gun* gun : guns) {
-        bullets.emplace_back(gun->shoot(GameObject::controls::LEFT));
+        Bullet* bullet = gun->shoot(GameObject::controls::LEFT);
+        if (bullet != nullptr) bulletContainer->emplace_back(bullet);
     }
-    return &bullets;
 }
 
 Enemy* Enemy::refer() { return  this; }
