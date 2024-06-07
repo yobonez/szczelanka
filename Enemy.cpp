@@ -10,7 +10,7 @@ Enemy::Enemy() : VisualGameObject() {
     setPredefControls(controls);
     setPattern(pattern);
     setSize(11, 3);
-    setHealth(100);
+    setHealth(99);
 
     srand(time(NULL));
 
@@ -26,7 +26,17 @@ void Enemy::attachGun(Gun* gun) {
 }
 
 void Enemy::setHealth(unsigned short in_Health) {
-    health = in_Health;
+    m_health = in_Health;
+}
+void Enemy::dealDamage(unsigned short in_Damage) {
+    m_health -= in_Damage;
+    if (m_health <= 0) {
+        for (Gun* gun : guns) {
+            delete gun;
+        }
+        guns.clear();
+        markForDeath(); // mark for deletion in the next tick
+    }
 }
 
 void Enemy::shoot(std::vector<VisualGameObject*>* bulletContainer) {

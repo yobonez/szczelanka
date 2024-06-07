@@ -57,3 +57,6 @@ std::array<short, 2> VisualGameObject::getSize() {
 std::wstring VisualGameObject::getPattern() {
     return m_pattern;
 }
+
+bool VisualGameObject::isDead() { return m_markedForDeath; }
+void VisualGameObject::markForDeath() { m_markedForDeath = true; }

@@ -27,14 +27,22 @@ void TerminalEngine::init() {
 }
 
 void TerminalEngine::doEvents() {
-    if(timer % 50 == 0) {
-        scene.createEnemy();
-    }
-    for(VisualGameObject* obj : *visibleObjects) {
+    for(int i = 0; i < visibleObjects->size(); i++) {
+        VisualGameObject* obj = (*visibleObjects)[i];
+        // TODO: something is wrong - either it is collision or something different, it just completely doesnt react
+        if(obj->isDead()) {
+            delete obj;
+            visibleObjects->erase(visibleObjects->begin() + i);
+        }
+
         if(obj->getDetailedName() == "Enemy") {
             Enemy* enemy = (Enemy*)obj->refer();
             enemy->shoot(visibleObjects);
         }
+    }
+
+    if(timer % 50 == 0) {
+        scene.createEnemy();
     }
 }
 
@@ -117,17 +125,12 @@ void TerminalEngine::handleCollisions() {
     }
 
     // "ask" a bullet whether is it colliding with a player/enemy
+    // and deal damage if it's indeed colliding
     for(Bullet* bullet : bulletsChecking) {
-        for(int i = 0; i < shipsToCheck.size(); i++) {
-            bullet->tryDealingDamage(shipsToCheck[i]);
+        for(VisualGameObject* ship : shipsToCheck) {
+            bullet->tryDealingDamage(ship);
         }
     }
-    // if so,
-    // each bullet checks for enemy/player collision
-
-//    Player* player = (Player*)visibleObjects[0]->refer();
-//    for (VisualGameObject* obj : *visibleObjects) {
-//    }
 }
 
 void TerminalEngine::tick() {

@@ -12,6 +12,7 @@ private:
 public:
     Player();
     void setHealth(unsigned short in_Health);
+    void dealDamage(unsigned short in_Damage);
     Player* refer();
     void shoot(short& in_controls, std::vector<VisualGameObject*>* bulletContainer);
 };

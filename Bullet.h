@@ -11,4 +11,7 @@ public:
     Bullet(short direction, short start_X, short start_Y);
     void tryDealingDamage(VisualGameObject* in_Obj);
     Bullet* refer();
+
+    // not relevant to Bullet
+    void dealDamage(unsigned short in_Damage);
 };

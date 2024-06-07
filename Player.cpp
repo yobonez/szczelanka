@@ -23,6 +23,17 @@ void Player::setHealth(unsigned short in_Health) {
     m_health = in_Health;
 }
 
+void Player::dealDamage(unsigned short in_Damage) {
+    m_health -= in_Damage;
+    if (m_health <= 0) {
+        for (Gun* gun : guns) {
+            delete gun;
+        }
+        guns.clear();
+        markForDeath(); // mark for deletion
+    }
+}
+
 void Player::shoot(short& in_controls, std::vector<VisualGameObject*>* bulletContainer) {
     if ((in_controls & controls::SHOOT) != 0){
         for (Gun* gun : guns) {

@@ -10,6 +10,7 @@ private:
     short size_X, size_Y;
     short m_predefControls;
     short m_currentFacing;
+    bool m_markedForDeath = false;
 public:
     VisualGameObject();
 
@@ -22,9 +23,13 @@ public:
     virtual std::array<short, 2> getPos();
     virtual void setPredefControls(short& in_controls);
     virtual void setObjFacing(short in_Facing);
-    virtual short getFacingDirection();
+    virtual short getObjFacing();
     virtual void move(short& in_controls, short interval);
 
+    virtual bool isDead();
+    virtual void markForDeath();
+
     virtual void setHealth(unsigned short in_Health) = 0;
+    virtual void dealDamage(unsigned short in_Damage) = 0;
     virtual VisualGameObject* refer() = 0;
 };
