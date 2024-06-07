@@ -19,6 +19,13 @@ void VisualGameObject::setPredefControls(short& in_controls) {
     m_predefControls = in_controls;
 }
 
+void VisualGameObject::setObjFacing(short in_Facing) {
+    m_currentFacing = in_Facing;
+}
+short VisualGameObject::getObjFacing() {
+    return m_currentFacing;
+}
+
 void VisualGameObject::move(short& in_controls, short interval) {
     if (timer % interval == 0){
         short controls = 0;

@@ -5,7 +5,7 @@
 
 class Player : public VisualGameObject {
 private:
-    unsigned short health;
+    unsigned short m_health;
     std::vector<Gun*> guns;
 //    std::vector<Bullet*> bullets;
     void attachGun(Gun* gun);

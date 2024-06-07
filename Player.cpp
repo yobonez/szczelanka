@@ -4,6 +4,8 @@ Player::Player() : VisualGameObject() { // sprawdz se potem czy mozesz po refere
     std::wstring pattern = L"     #---\\>` .//|#-->`::|||#-----|>` .\\\\|#-->`     #---/>";
 
     setDetailedName("Player");
+
+    setObjFacing(GameObject::controls::RIGHT);
     setPattern(pattern);
     setSize(13, 5);
     setHealth(100);
@@ -18,7 +20,7 @@ void Player::attachGun(Gun* gun) {
 }
 
 void Player::setHealth(unsigned short in_Health) {
-    health = in_Health;
+    m_health = in_Health;
 }
 
 void Player::shoot(short& in_controls, std::vector<VisualGameObject*>* bulletContainer) {

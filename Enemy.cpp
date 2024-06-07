@@ -3,9 +3,11 @@
 Enemy::Enemy() : VisualGameObject() {
     std::wstring pattern = L"  </--#`<|----#|:::`  <\\--#";
 
-    short controls = GameObject::controls::LEFT;
-    setPredefControls(controls);
     setDetailedName("Enemy");
+
+    short controls = GameObject::controls::LEFT;
+    setObjFacing(controls);
+    setPredefControls(controls);
     setPattern(pattern);
     setSize(11, 3);
     setHealth(100);

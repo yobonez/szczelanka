@@ -104,7 +104,30 @@ void TerminalEngine::handleMovement(){
 }
 
 void TerminalEngine::handleCollisions() {
+    // Get player, enemies and bullets
+    std::vector<VisualGameObject*> shipsToCheck;
+    std::vector<Bullet*> bulletsChecking;
 
+    shipsToCheck.emplace_back((*visibleObjects)[0]);
+
+    for (int i = 1; i < visibleObjects->size(); i++) {
+        VisualGameObject* obj = (*visibleObjects)[i];
+        if (obj->getDetailedName() == "Enemy") shipsToCheck.emplace_back(obj);
+        if (obj->getDetailedName() == "Bullet") bulletsChecking.emplace_back((Bullet*)obj->refer());
+    }
+
+    // "ask" a bullet whether is it colliding with a player/enemy
+    for(Bullet* bullet : bulletsChecking) {
+        for(int i = 0; i < shipsToCheck.size(); i++) {
+            bullet->tryDealingDamage(shipsToCheck[i]);
+        }
+    }
+    // if so,
+    // each bullet checks for enemy/player collision
+
+//    Player* player = (Player*)visibleObjects[0]->refer();
+//    for (VisualGameObject* obj : *visibleObjects) {
+//    }
 }
 
 void TerminalEngine::tick() {

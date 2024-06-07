@@ -9,6 +9,7 @@ private:
     std::wstring m_pattern;
     short size_X, size_Y;
     short m_predefControls;
+    short m_currentFacing;
 public:
     VisualGameObject();
 
@@ -20,6 +21,8 @@ public:
     virtual void setPos(short in_X, short in_Y);
     virtual std::array<short, 2> getPos();
     virtual void setPredefControls(short& in_controls);
+    virtual void setObjFacing(short in_Facing);
+    virtual short getFacingDirection();
     virtual void move(short& in_controls, short interval);
 
     virtual void setHealth(unsigned short in_Health) = 0;
