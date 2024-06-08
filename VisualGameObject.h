@@ -29,7 +29,7 @@ public:
     virtual bool isDead();
     virtual void markForDeath();
 
-    virtual void setHealth(unsigned short in_Health) = 0;
-    virtual void dealDamage(unsigned short in_Damage) = 0;
+    virtual void setHealth(short in_Health) = 0;
+    virtual void dealDamage(short in_Damage) = 0;
     virtual VisualGameObject* refer() = 0;
 };

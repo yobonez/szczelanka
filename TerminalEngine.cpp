@@ -33,12 +33,13 @@ void TerminalEngine::doEvents() {
         if(obj->isDead()) {
             delete obj;
             visibleObjects->erase(visibleObjects->begin() + i);
+            continue;
         }
 
-        if(obj->getDetailedName() == "Enemy") {
-            Enemy* enemy = (Enemy*)obj->refer();
-            enemy->shoot(visibleObjects);
-        }
+//        if(obj->getDetailedName() == "Enemy") {
+//            Enemy* enemy = (Enemy*)obj->refer();
+//            enemy->shoot(visibleObjects);
+//        }
     }
 
     if(timer % 50 == 0) {
@@ -105,10 +106,10 @@ void TerminalEngine::handleMovement(){
         if (obj->getDetailedName() == "Enemy") obj->move(direction, 5);
     }
 
-    std::bitset<16> binDirection(playerControls);
-    std::string debugStr = "Controls: " + binDirection.to_string() + " | " + std::to_string(visObjectCount);
+//    std::bitset<16> binDirection(playerControls);
+//    std::string debugStr = "Controls: " + binDirection.to_string() + " | " + std::to_string(visObjectCount);
 
-    Utils::debugDisplay(debugStr, canvas);
+//    Utils::debugDisplay(debugStr, canvas);
 }
 
 void TerminalEngine::handleCollisions() {
@@ -128,7 +129,7 @@ void TerminalEngine::handleCollisions() {
     // and deal damage if it's indeed colliding
     for(Bullet* bullet : bulletsChecking) {
         for(VisualGameObject* ship : shipsToCheck) {
-            bullet->tryDealingDamage(ship);
+            bullet->tryDealingDamage(ship, canvas);
         }
     }
 }

@@ -25,10 +25,10 @@ void Enemy::attachGun(Gun* gun) {
     guns.emplace_back(gun);
 }
 
-void Enemy::setHealth(unsigned short in_Health) {
+void Enemy::setHealth(short in_Health) {
     m_health = in_Health;
 }
-void Enemy::dealDamage(unsigned short in_Damage) {
+void Enemy::dealDamage(short in_Damage) {
     m_health -= in_Damage;
     if (m_health <= 0) {
         for (Gun* gun : guns) {
