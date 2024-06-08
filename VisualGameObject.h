@@ -1,5 +1,6 @@
 #pragma once
 #include <array>
+#include <random>
 #include "GameObject.h"
 
 class VisualGameObject : public GameObject {
@@ -20,6 +21,7 @@ public:
     virtual std::array<short, 2> getSize();
 
     virtual void setPos(short in_X, short in_Y);
+    virtual void setPos(std::array<short, 2> in_Pos);
     virtual std::array<short, 2> getPos();
     virtual void setPredefControls(short& in_controls);
     virtual void setObjFacing(short in_Facing);

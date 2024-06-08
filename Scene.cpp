@@ -11,7 +11,7 @@ void Scene::createPlayer() {
 }
 void Scene::createEnemy() {
     // difficulty? ez - 3, mid - 6, etc.
-    if (m_VisualGameObjects.size() > 1) return;
+    if (m_VisualGameObjects.size() > 6) return;
     m_VisualGameObjects.emplace_back(new Enemy());
 }
 

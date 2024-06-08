@@ -31,8 +31,8 @@ void Bullet::tryDealingDamage(VisualGameObject* in_Obj, wchar_t* canvas) {
     obj_XY = in_Obj->getPos();
     objSize = in_Obj->getSize();
 
-    std::string debug = "Bullet impact X: " + std::to_string(bullet_XY[0] + bulletSize[0]) + " | Enemy X: " + std::to_string(obj_XY[0]);
-//    Utils::debugDisplay(debug, canvas);
+//    std::string debug = "Bullet impact X: " + std::to_string(bullet_XY[0] + bulletSize[0]) + " | Enemy X: " + std::to_string(obj_XY[0]);
+////    Utils::debugDisplay(debug, canvas);
 
 
     short bulletImpactX = 0;

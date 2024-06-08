@@ -10,6 +10,7 @@
 
 short timer = 0;
 short visObjectCount = 0;
+short prevDebugMsgLength = 0;
 
 TerminalEngine::TerminalEngine() : scr_W(120), scr_H(30) {
     hConsole = CreateConsoleScreenBuffer(GENERIC_READ | GENERIC_WRITE, 2, NULL, CONSOLE_TEXTMODE_BUFFER, NULL);
@@ -106,10 +107,10 @@ void TerminalEngine::handleMovement(){
         if (obj->getDetailedName() == "Enemy") obj->move(direction, 5);
     }
 
-//    std::bitset<16> binDirection(playerControls);
-//    std::string debugStr = "Controls: " + binDirection.to_string() + " | " + std::to_string(visObjectCount);
+    std::bitset<16> binDirection(playerControls);
+    std::string debugStr = "Controls: " + binDirection.to_string() + " | Objects: " + std::to_string(visObjectCount);
 
-//    Utils::debugDisplay(debugStr, canvas);
+    Utils::debugDisplay(debugStr, canvas);
 }
 
 void TerminalEngine::handleCollisions() {
@@ -138,8 +139,8 @@ void TerminalEngine::handleCollisions() {
         if (obj_XY[1] >= scr_H - objSize[1]) obj->setPos(obj_XY[0], obj_XY[1] - 1);
         if (obj_XY[1] <= 0) obj->setPos(obj_XY[0], obj_XY[1] + 1);
 
-        std::string debug = "Pos(x,y): " + std::to_string(obj_XY[0]) + " | " + std::to_string(obj_XY[1]);
-        Utils::debugDisplay(debug, canvas);
+//        std::string debug = "Pos(x,y): " + std::to_string(obj_XY[0]) + " | " + std::to_string(obj_XY[1]);
+//        Utils::debugDisplay(debug, canvas);
 
         if (obj->getDetailedName() == "Enemy") shipsToCheck.emplace_back(obj);
         if (obj->getDetailedName() == "Bullet") bulletsChecking.emplace_back((Bullet*)obj->refer());
