@@ -67,6 +67,12 @@ void Bullet::tryDealingDamage(VisualGameObject* in_Obj, wchar_t* canvas) {
 }
 
 void Bullet::dealDamage(short in_Damage) {
+    std::wstring pattern = getPattern();
+    for(int i = 0; i < pattern.length(); i++) {
+        pattern[i] = L' ';
+    }
+    setPattern(pattern);
+
     markForDeath();
 }
 

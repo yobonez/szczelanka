@@ -142,8 +142,8 @@ void TerminalEngine::tick() {
     handleKeys();
     handleMovement();
     handleCollisions();
-    doEvents();
     draw();
+    doEvents();
 }
 
 void TerminalEngine::draw() {

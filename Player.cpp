@@ -30,6 +30,8 @@ void Player::dealDamage(short in_Damage) {
             delete gun;
         }
         guns.clear();
+        std::wstring noPattern = L" ";
+        setPattern(noPattern);
         markForDeath(); // mark for deletion
     }
 }

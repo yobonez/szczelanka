@@ -35,6 +35,11 @@ void Enemy::dealDamage(short in_Damage) {
             delete gun;
         }
         guns.clear();
+
+        // remove the object visually on the last render
+        std::wstring noPattern = L" ";
+        setPattern(noPattern);
+
         markForDeath(); // mark for deletion in the next tick
     }
 }
