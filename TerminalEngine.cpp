@@ -36,10 +36,10 @@ void TerminalEngine::doEvents() {
             continue;
         }
 
-//        if(obj->getDetailedName() == "Enemy") {
-//            Enemy* enemy = (Enemy*)obj->refer();
-//            enemy->shoot(visibleObjects);
-//        }
+        if(obj->getDetailedName() == "Enemy") {
+            Enemy* enemy = (Enemy*)obj->refer();
+            enemy->shoot(visibleObjects);
+        }
     }
 
     if(timer % 50 == 0) {
@@ -119,15 +119,35 @@ void TerminalEngine::handleCollisions() {
 
     shipsToCheck.emplace_back((*visibleObjects)[0]);
 
-    for (int i = 1; i < visibleObjects->size(); i++) {
+    for (int i = 0; i < visibleObjects->size(); i++) {
         VisualGameObject* obj = (*visibleObjects)[i];
+
+        std::array<short, 2> obj_XY = obj->getPos();
+        std::array<short, 2> objSize = obj->getSize();
+
+        if (obj_XY[0] > scr_W - objSize[0])
+        {
+            obj->setPos(obj_XY[0] - 1, obj_XY[1]);
+            if (obj->getDetailedName() == "Bullet") obj->dealDamage(100); continue;
+        }
+        if (obj_XY[0] < 0)
+        {
+            obj->setPos(obj_XY[0] + 1, obj_XY[1]);
+            if (obj->getDetailedName() == "Bullet") obj->dealDamage(100); continue;
+        }
+        if (obj_XY[1] >= scr_H - objSize[1]) obj->setPos(obj_XY[0], obj_XY[1] - 1);
+        if (obj_XY[1] <= 0) obj->setPos(obj_XY[0], obj_XY[1] + 1);
+
+        std::string debug = "Pos(x,y): " + std::to_string(obj_XY[0]) + " | " + std::to_string(obj_XY[1]);
+        Utils::debugDisplay(debug, canvas);
+
         if (obj->getDetailedName() == "Enemy") shipsToCheck.emplace_back(obj);
         if (obj->getDetailedName() == "Bullet") bulletsChecking.emplace_back((Bullet*)obj->refer());
     }
 
     // "ask" a bullet whether is it colliding with a player/enemy
     // and deal damage if it's indeed colliding
-    for(Bullet* bullet : bulletsChecking) {
+    for (Bullet* bullet : bulletsChecking) {
         for(VisualGameObject* ship : shipsToCheck) {
             bullet->tryDealingDamage(ship, canvas);
         }

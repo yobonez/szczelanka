@@ -14,7 +14,7 @@ Enemy::Enemy() : VisualGameObject() {
 
     srand(time(NULL));
 
-    short rnd_X = (rand() % 100) + 50;
+    short rnd_X = (rand() % 60) + 60;
     short rnd_Y = (rand() % 10) + 10;
     setPos(rnd_X, rnd_Y);
 
