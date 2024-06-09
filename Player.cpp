@@ -11,9 +11,9 @@ Player::Player() : VisualGameObject() { // sprawdz se potem czy mozesz po refere
     setHealth(100);
     setPos(0,10);
 
-    attachGun(new Gun(this, 10, 0, 26));
-    attachGun(new Gun(this, 12, 2, 26));
-    attachGun(new Gun(this, 10, 4, 26));
+    attachGun(new Gun(this, 50, 10, 0, 26));
+    attachGun(new Gun(this, 50, 12, 2, 26));
+    attachGun(new Gun(this, 50, 10, 4, 26));
 }
 void Player::attachGun(Gun* gun) {
     guns.emplace_back(gun);

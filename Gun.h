@@ -6,9 +6,11 @@
 
 class Gun : public Emitter {
 private:
-    short cooldown;
+    short m_bulletDamage;
+    short m_cooldown;
+    VisualGameObject* m_owner;
 public:
-    Gun(VisualGameObject* in_ParentObj, short in_X, short in_Y, short in_Cooldown);
+    Gun(VisualGameObject* in_ParentObj, short in_BulletDamage, short in_X, short in_Y, short in_Cooldown);
     void setCooldown(short in_Cooldown);
     void getParentAbsolutePos();
 

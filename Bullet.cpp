@@ -1,12 +1,13 @@
 #include "Bullet.h"
 
-Bullet::Bullet(short direction, short start_X, short start_Y) : VisualGameObject() {
+Bullet::Bullet(short in_Direction, short in_Damage, short start_X, short start_Y) : VisualGameObject() {
     std::wstring pattern = L"---";
+    m_damage = in_Damage;
 
     setDetailedName("Bullet");
 
-    setPredefControls(direction);
-    setObjFacing(direction);
+    setPredefControls(in_Direction);
+    setObjFacing(in_Direction);
     setPattern(pattern);
     setSize(3,1);
     setHealth(1);

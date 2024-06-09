@@ -18,7 +18,7 @@ Enemy::Enemy() : VisualGameObject() {
     short rnd_Y = (rand() % 10) + 10;
     setPos(rnd_X, rnd_Y);
 
-    attachGun(new Gun(this, 0, 1, 50));
+    attachGun(new Gun(this, 25,0, 1, 50));
 }
 
 void Enemy::attachGun(Gun* gun) {

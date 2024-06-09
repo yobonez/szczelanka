@@ -134,6 +134,10 @@ void TerminalEngine::handleCollisions() {
         if (obj_XY[0] < 0)
         {
             obj->setPos(obj_XY[0] + 1, obj_XY[1]);
+            if (obj->getDetailedName() == "Enemy") {
+                obj->dealDamage(100);
+                shipsToCheck[0]->dealDamage(25); continue;
+            }
             if (obj->getDetailedName() == "Bullet") obj->dealDamage(100); continue;
         }
         if (obj_XY[1] >= scr_H - objSize[1]) obj->setPos(obj_XY[0], obj_XY[1] - 1);
