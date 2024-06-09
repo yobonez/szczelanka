@@ -62,7 +62,6 @@ void TerminalEngine::placePatternsOnCanvas() {
 
         short rowCount = 0;
         short colCount = 0;
-//        short patternUpSideLength = 0, patternDownSideLength = 0;
 
         // primitive clearing before rendering, so the terminal isn't gonna be cluttered with mess
         // will make a better version if i'll have time
@@ -79,8 +78,6 @@ void TerminalEngine::placePatternsOnCanvas() {
             else
             {
                 colCount++;
-//                if (colCount == 1) patternUpSideLength = rowCount;
-//                patternDownSideLength = rowCount;
                 rowCount = 0;
             }
         }
@@ -107,10 +104,10 @@ void TerminalEngine::handleMovement(){
         if (obj->getDetailedName() == "Enemy") obj->move(direction, 5);
     }
 
-    std::bitset<16> binDirection(playerControls);
-    std::string debugStr = "Controls: " + binDirection.to_string() + " | Objects: " + std::to_string(visObjectCount);
-
-    Utils::debugDisplay(debugStr, canvas);
+//    std::bitset<16> binDirection(playerControls);
+//    std::string debugStr = "Controls: " + binDirection.to_string() + " | Objects: " + std::to_string(visObjectCount);
+//
+//    Utils::debugDisplay(debugStr, canvas);
 }
 
 void TerminalEngine::handleCollisions() {
