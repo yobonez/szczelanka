@@ -11,7 +11,7 @@ private:
     std::vector<Bullet*> bullets;
     void attachGun(Gun* gun);
 public:
-    Enemy();
+    Enemy(short in_X, short in_Y);
     void setHealth(short in_Health);
     short getHealth();
     void dealDamage(short in_Damage);

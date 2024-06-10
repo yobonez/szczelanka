@@ -43,7 +43,7 @@ void TerminalEngine::doEvents() {
         }
     }
 
-    if(timer % 50 == 0) {
+    if(timer % 75 == 0) {
         scene.createEnemy();
     }
 }
@@ -111,10 +111,10 @@ void TerminalEngine::handleMovement(){
         if (obj->getDetailedName() == "Enemy") obj->move(direction, 5);
     }
 
-    std::bitset<16> binDirection(playerControls);
-    std::string debugStr = "Controls: " + binDirection.to_string() + " | Objects: " + std::to_string(visObjectCount);
-
-    Utils::displayText2D(debugStr, canvas, 0, 1, scr_W);
+//    std::bitset<16> binDirection(playerControls);
+//    std::string debugStr = "Controls: " + binDirection.to_string() + " | Objects: " + std::to_string(visObjectCount);
+//
+//    Utils::displayText2D(debugStr, canvas, 0, 1, scr_W);
 }
 
 void TerminalEngine::handleCollisions() {
@@ -165,7 +165,7 @@ void TerminalEngine::handleCollisions() {
 
 void TerminalEngine::tick() {
     timer++;
-    if (timer >= 50) { timer = 0; }
+    if (timer >= 100) { timer = 0; }
 
     visObjectCount = visibleObjects->size();
     handleKeys();

@@ -6,6 +6,7 @@ int main()
 {
     TerminalEngine game;
     game.init();
+    // a menu, perhaps?
 
     while(true) {
         game.tick();

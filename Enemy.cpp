@@ -1,6 +1,6 @@
 #include "Enemy.h"
 
-Enemy::Enemy() : VisualGameObject() {
+Enemy::Enemy(short in_X, short in_Y) : VisualGameObject() {
     std::wstring pattern = L"  </--#`<|----#|:::`  <\\--#";
 
     setDetailedName("Enemy");
@@ -10,15 +10,10 @@ Enemy::Enemy() : VisualGameObject() {
     setPredefControls(controls);
     setPattern(pattern);
     setSize(11, 3);
-    setHealth(99);
+    setHealth(100);
+    setPos(in_X, in_Y);
 
-    srand(time(NULL));
-
-    short rnd_X = (rand() % 60) + 60;
-    short rnd_Y = (rand() % 10) + 10;
-    setPos(rnd_X, rnd_Y);
-
-    attachGun(new Gun(this, 25,0, 1, 50));
+    attachGun(new Gun(this, 15, 0, 1, 50));
 }
 
 void Enemy::attachGun(Gun* gun) {
