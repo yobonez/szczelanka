@@ -6,5 +6,5 @@
 
 namespace Utils {
     short coord2DTo1D(short in_X, short in_Y, short in_scrW);
-    void debugDisplay(std::string in_msg, wchar_t* in_canvas);
+    void displayText2D(std::string in_msg, wchar_t* in_canvas, short in_X, short in_Y, short in_scrW);
 }

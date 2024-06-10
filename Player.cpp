@@ -22,6 +22,7 @@ void Player::attachGun(Gun* gun) {
 void Player::setHealth(short in_Health) {
     m_health = in_Health;
 }
+short Player::getHealth() { return m_health; }
 
 void Player::dealDamage(short in_Damage) {
     m_health -= in_Damage;

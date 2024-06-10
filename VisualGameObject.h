@@ -32,6 +32,7 @@ public:
     virtual void markForDeath();
 
     virtual void setHealth(short in_Health) = 0;
+    virtual short getHealth() = 0;
     virtual void dealDamage(short in_Damage) = 0;
     virtual VisualGameObject* refer() = 0;
 };

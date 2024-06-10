@@ -28,6 +28,8 @@ void Enemy::attachGun(Gun* gun) {
 void Enemy::setHealth(short in_Health) {
     m_health = in_Health;
 }
+short Enemy::getHealth() { return m_health; }
+
 void Enemy::dealDamage(short in_Damage) {
     m_health -= in_Damage;
     if (m_health <= 0) {

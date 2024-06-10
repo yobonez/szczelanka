@@ -17,6 +17,7 @@ Bullet::Bullet(short in_Direction, short in_Damage, short start_X, short start_Y
 void Bullet::setHealth(short in_Health) {
     m_health = in_Health;
 }
+short Bullet::getHealth() { return m_health; }
 
 void Bullet::tryDealingDamage(VisualGameObject* in_Obj, wchar_t* canvas) {
     short bulletDirection, objectDirection;

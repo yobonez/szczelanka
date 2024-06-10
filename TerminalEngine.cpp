@@ -10,7 +10,7 @@
 
 short timer = 0;
 short visObjectCount = 0;
-short prevDebugMsgLength = 0;
+short prevPrintMsgLength = 0;
 
 TerminalEngine::TerminalEngine() : scr_W(120), scr_H(30) {
     hConsole = CreateConsoleScreenBuffer(GENERIC_READ | GENERIC_WRITE, 2, NULL, CONSOLE_TEXTMODE_BUFFER, NULL);
@@ -70,6 +70,13 @@ void TerminalEngine::placePatternsOnCanvas() {
                 canvas[coord_1D - scr_W - 1 + X + (scr_W * Y)] = L' ';
             }
         }
+
+        std::string currObjName = currentObject->getDetailedName();
+        if (currObjName == "Player" || currObjName == "Enemy") {
+            std::string healthDisplay = "|" + std::to_string(currentObject->getHealth()) + " HP|";
+            Utils::displayText2D(healthDisplay, canvas, objectCoordinates[0] + (objectSizeXY[0] / 2) - 2, objectCoordinates[1] - 1, scr_W);
+        }
+
         for (int i = 0; i < objectPatternLength; i++) {
             if (objectPattern[i] != L'`') {
                 canvas[coord_1D + rowCount + (scr_W * colCount)] = objectPattern[i];
@@ -104,10 +111,10 @@ void TerminalEngine::handleMovement(){
         if (obj->getDetailedName() == "Enemy") obj->move(direction, 5);
     }
 
-//    std::bitset<16> binDirection(playerControls);
-//    std::string debugStr = "Controls: " + binDirection.to_string() + " | Objects: " + std::to_string(visObjectCount);
-//
-//    Utils::debugDisplay(debugStr, canvas);
+    std::bitset<16> binDirection(playerControls);
+    std::string debugStr = "Controls: " + binDirection.to_string() + " | Objects: " + std::to_string(visObjectCount);
+
+    Utils::displayText2D(debugStr, canvas, 0, 1, scr_W);
 }
 
 void TerminalEngine::handleCollisions() {

@@ -13,6 +13,7 @@ private:
 public:
     Enemy();
     void setHealth(short in_Health);
+    short getHealth();
     void dealDamage(short in_Damage);
     Enemy* refer();
     void shoot(std::vector<VisualGameObject*>* bulletContainer);

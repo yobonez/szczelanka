@@ -11,6 +11,7 @@ private:
 public:
     Player();
     void setHealth(short in_Health);
+    short getHealth();
     void dealDamage(short in_Damage);
     Player* refer();
     void shoot(short& in_controls, std::vector<VisualGameObject*>* bulletContainer);
