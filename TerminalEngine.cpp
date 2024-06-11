@@ -76,6 +76,11 @@ void TerminalEngine::placePatternsOnCanvas() {
             std::string healthDisplay = "|" + std::to_string(currentObject->getHealth()) + " HP|";
             Utils::displayText2D(healthDisplay, canvas, objectCoordinates[0] + (objectSizeXY[0] / 2) - 2, objectCoordinates[1] - 1, scr_W);
         }
+        if (currentObject->isDead()) {
+            std::string spaces(objectSizeXY[0] + 2, ' ');
+            Utils::displayText2D(spaces, canvas, objectCoordinates[0] - 2, objectCoordinates[1], scr_W);
+//            continue;
+        }
 
         for (int i = 0; i < objectPatternLength; i++) {
             if (objectPattern[i] != L'`') {

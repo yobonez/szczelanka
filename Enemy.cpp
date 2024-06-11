@@ -33,7 +33,7 @@ void Enemy::dealDamage(short in_Damage) {
         }
         guns.clear();
 
-        // remove the object visually on the last render
+        // remove the object visually before the last render
         std::wstring noPattern = L" ";
         setPattern(noPattern);
 

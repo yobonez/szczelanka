@@ -19,6 +19,7 @@ void Bullet::setHealth(short in_Health) {
 }
 short Bullet::getHealth() { return m_health; }
 
+// maybe bullet - bullet collisions?
 void Bullet::tryDealingDamage(VisualGameObject* in_Obj, wchar_t* canvas) {
     short bulletDirection, objectDirection;
     bulletDirection = getObjFacing();
