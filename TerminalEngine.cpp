@@ -30,13 +30,16 @@ void TerminalEngine::init() {
 void TerminalEngine::doEvents() {
     for(int i = 0; i < visibleObjects->size(); i++) {
         VisualGameObject* obj = (*visibleObjects)[i];
-        // TODO: something is wrong - either it is collision or something different, it just completely doesnt react
+        if(obj->getDetailedName() == "Player" && obj->isDead())
+        {
+            scene.purge();
+            return;
+        }
         if(obj->isDead()) {
             delete obj;
             visibleObjects->erase(visibleObjects->begin() + i);
             continue;
         }
-
         if(obj->getDetailedName() == "Enemy") {
             Enemy* enemy = (Enemy*)obj->refer();
             enemy->shoot(visibleObjects);
@@ -79,7 +82,7 @@ void TerminalEngine::placePatternsOnCanvas() {
         if (currentObject->isDead()) {
             std::string spaces(objectSizeXY[0] + 2, ' ');
             Utils::displayText2D(spaces, canvas, objectCoordinates[0] - 2, objectCoordinates[1], scr_W);
-//            continue;
+            continue;
         }
 
         for (int i = 0; i < objectPatternLength; i++) {
@@ -94,6 +97,16 @@ void TerminalEngine::placePatternsOnCanvas() {
             }
         }
     }
+}
+
+void TerminalEngine::clearCanvas() {
+    for (int Y = 0; Y < scr_H; Y++) {
+        for (int X = 0; X < scr_W; X++) {
+            canvas[Utils::coord2DTo1D(X, Y, scr_W)] = L' ';
+        }
+    }
+
+    draw(false);
 }
 
 void TerminalEngine::handleKeys() {
@@ -163,7 +176,7 @@ void TerminalEngine::handleCollisions() {
     // and deal damage if it's indeed colliding
     for (Bullet* bullet : bulletsChecking) {
         for(VisualGameObject* ship : shipsToCheck) {
-            bullet->tryDealingDamage(ship, canvas);
+            bullet->tryDealingDamage(ship);
         }
     }
 }
@@ -176,11 +189,26 @@ void TerminalEngine::tick() {
     handleKeys();
     handleMovement();
     handleCollisions();
-    draw();
+    draw(true);
     doEvents();
+
+    // death
+    if (visObjectCount == 0) {
+        bool keyPressed = false;
+        clearCanvas();
+        std::string urDead = "Your ship has been destroyed. Press [ENTER] to restart";
+        Utils::displayText2D(urDead, canvas, scr_W/2 - urDead.length(), scr_H/2, scr_W); draw(false);
+
+        while(!keyPressed) {
+            if (GetAsyncKeyState(VK_RETURN) & 0x8000) {
+                init();
+                return;
+            }
+        }
+    }
 }
 
-void TerminalEngine::draw() {
-    placePatternsOnCanvas();
+void TerminalEngine::draw(bool in_WithPatterns) {
+    if (in_WithPatterns) placePatternsOnCanvas();
     WriteConsoleOutputCharacterW(hConsole, canvas, scr_H*scr_W, { 0,0 }, &charsWritten);
 }

@@ -13,10 +13,11 @@ private:
     HANDLE hConsole;
     DWORD charsWritten;
     void placePatternsOnCanvas();
+    void clearCanvas();
     void handleKeys();
     void handleMovement();
     void handleCollisions();
-    void draw();
+    void draw(bool in_WithPatterns);
 
     void doEvents();
 

@@ -10,33 +10,46 @@ void Scene::createPlayer() {
     ply = (Player*)m_VisualGameObjects[0]->refer();
 }
 void Scene::createEnemy() {
-    // random X and Y for new Enemy pos
-    srand(time(NULL));
-    short rnd_X = (rand() % 60) + 60;
-    short rnd_Y = (rand() % 10) + 10;
-    std::array<short, 2> currentEnemyPos = {0, 0};
+    VisualGameObject* newEnemy = new Enemy(0, 0);
+    std::array<short, 2> newEnemySize = newEnemy->getSize();
 
     // difficulty? ez - 3, mid - 6, etc.
     short enemyCount = 0;
     for (VisualGameObject* obj : m_VisualGameObjects) {
         if (obj->getDetailedName() == "Enemy") {
             enemyCount++;
-
-            std::array<short, 2> currentEnemyPos = obj->getPos();
-            std::array<short, 2> currentEnemySize = obj->getSize();
-            // repeat getting random x,y pos if enemies intersecting
-            if ( ! ((rnd_X > currentEnemyPos[0]) &&
-                    (rnd_X < currentEnemyPos[0] + currentEnemySize[0]) &&
-                    (rnd_Y > currentEnemyPos[1]) &&
-                    (rnd_Y < currentEnemyPos[1] + currentEnemySize[1]))) {
-                short rnd_X = (rand() % 60) + 60;
-                short rnd_Y = (rand() % 10) + 10;
-            }
         }
     }
 
-    if (enemyCount > 3) return;
-    m_VisualGameObjects.emplace_back(new Enemy(rnd_X, rnd_Y));
+    srand(time(NULL));
+    short rnd_X = (rand() % 60) + 60;
+    short rnd_Y = (rand() % 10) + 10;
+    newEnemy->setPos(rnd_X, rnd_Y);
+
+//    bool canSpawn = true;
+//    if (enemyCount > 0) {
+//        canSpawn = false;
+//
+//        while(!canSpawn) {
+//            srand(time(NULL));
+//            short rnd_X = (rand() % 60) + 60;
+//            short rnd_Y = (rand() % 10) + 10;
+//            newEnemy->setPos(rnd_X, rnd_Y);
+//
+//            for(VisualGameObject* existingEnemy : m_VisualGameObjects) {
+//                if (existingEnemy->getDetailedName() != "Enemy") continue;
+//                if (!Utils::isIntersecting(newEnemy, existingEnemy)){
+//                    canSpawn = true;
+//                }
+//            }
+//        }
+//    }
+
+    if (enemyCount > 3){
+        delete newEnemy;
+        return;
+    }
+    /*if (canSpawn) */ m_VisualGameObjects.emplace_back(newEnemy);
 }
 
 void Scene::forwardPlayerActions(short& in_controls) {
@@ -44,4 +57,16 @@ void Scene::forwardPlayerActions(short& in_controls) {
         ply->move(in_controls, 2);
         ply->shoot(in_controls, &m_VisualGameObjects);
     }
+}
+
+void Scene::purge() {
+    for (int i = 0; i < m_VisualGameObjects.size(); i++) {
+        VisualGameObject* obj = m_VisualGameObjects[i];
+        if(!(obj->isDead())) {
+            obj->dealDamage(100);
+            delete obj;
+        }
+    }
+    delete ply;
+    m_VisualGameObjects.clear();
 }

@@ -23,3 +23,34 @@ void Utils::displayText2D(std::string in_Msg, wchar_t* in_canvas, short in_X, sh
     }
     prevPrintMsgLength = win_msg.size();
 }
+
+bool Utils::isIntersecting(VisualGameObject* obj1, VisualGameObject* obj2)
+{
+    std::array<short, 2> obj1XY = obj1->getPos();
+    std::array<short, 2> obj1Size = obj1->getSize();
+    std::array<short, 2> obj2XY = obj2->getPos();
+    std::array<short, 2> obj2Size = obj2->getSize();
+
+    std::array<short, 2> obj1Vertices[4] = {
+        {obj1XY[0], obj1XY[1]},
+        {obj1XY[0] + obj1Size[0], obj1XY[1]},
+        {obj1XY[0], obj1XY[1] + obj1Size[1]},
+        {obj1XY[0] + obj1Size[0], obj1XY[1] + obj1Size[1]}
+    };
+
+//    return !(obj1XY[0] > obj2XY[0] + obj2Size[0] ||
+//             obj1XY[0] + obj1Size[0] < obj2XY[0] ||
+//             obj1XY[1] > obj2XY[1] + obj2Size[1] ||
+//             obj1XY[1] + obj1Size[1] < obj2XY[1]);
+
+    for(int i = 0; i < 4; i++) {
+        if ((obj1Vertices[i][0] > obj2XY[0]) &&
+            (obj1Vertices[i][0] < obj2XY[0] + obj2Size[0]) &&
+            (obj1Vertices[i][1] > obj2XY[1]) &&
+            (obj1Vertices[i][1] < obj2XY[1] + obj2Size[1]))
+        {
+            return true;
+        }
+    }
+    return false;
+}
