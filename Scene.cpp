@@ -2,6 +2,9 @@
 #include "Player.h"
 #include "Enemy.h"
 
+extern short ext_scrH;
+extern short ext_scrW;
+
 Scene::Scene() {
 }
 
@@ -22,8 +25,8 @@ void Scene::createEnemy() {
     }
 
     srand(time(NULL));
-    short rnd_X = (rand() % 60) + 60;
-    short rnd_Y = (rand() % 10) + 10;
+    short rnd_X = (rand() % (ext_scrW/2)) + (ext_scrW/2);
+    short rnd_Y = (rand() % (ext_scrH/4)) + (ext_scrH/4);
     newEnemy->setPos(rnd_X, rnd_Y);
 
 //    bool canSpawn = true;
@@ -45,7 +48,7 @@ void Scene::createEnemy() {
 //        }
 //    }
 
-    if (enemyCount > 3){
+    if (enemyCount > 4){
         delete newEnemy;
         return;
     }

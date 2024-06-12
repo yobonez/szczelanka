@@ -11,8 +11,20 @@
 short timer = 0;
 short visObjectCount = 0;
 short prevPrintMsgLength = 0;
+short ext_scrW = 0;
+short ext_scrH = 0;
 
-TerminalEngine::TerminalEngine() : scr_W(120), scr_H(30) {
+TerminalEngine::TerminalEngine() {
+    CONSOLE_SCREEN_BUFFER_INFO csbi;
+    if (!GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi)) {
+        std::cout << "GetConsoleScreenBufferInfo error: " << GetLastError() << std::endl;
+    }
+    scr_W = csbi.srWindow.Right - csbi.srWindow.Left + 1;
+    scr_H = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
+
+    ext_scrH = scr_H;
+    ext_scrW = scr_W;
+
     hConsole = CreateConsoleScreenBuffer(GENERIC_READ | GENERIC_WRITE, 2, NULL, CONSOLE_TEXTMODE_BUFFER, NULL);
     SetConsoleActiveScreenBuffer(hConsole);
     charsWritten = 0;
@@ -167,9 +179,6 @@ void TerminalEngine::handleCollisions() {
         if (obj_XY[1] >= scr_H - objSize[1]) obj->setPos(obj_XY[0], obj_XY[1] - 1);
         if (obj_XY[1] <= 0) obj->setPos(obj_XY[0], obj_XY[1] + 1);
 
-//        std::string debug = "Pos(x,y): " + std::to_string(obj_XY[0]) + " | " + std::to_string(obj_XY[1]);
-//        Utils::debugDisplay(debug, canvas);
-
         if (objName == "Enemy") shipsToCheck.emplace_back(obj);
         if (objName == "Bullet") bulletsChecking.emplace_back((Bullet*)obj->refer());
     }
@@ -199,10 +208,10 @@ void TerminalEngine::tick() {
         bool keyPressed = false;
         clearCanvas();
         std::string urDead = "Your ship has been destroyed. Press [ENTER] to restart";
-        Utils::displayText2D(urDead, canvas, scr_W/2 - urDead.length(), scr_H/2, scr_W); draw(false);
+        Utils::displayText2D(urDead, canvas, scr_W/2 - urDead.length()/2 - 1, scr_H/2 - 1, scr_W); draw(false);
 
         while(!keyPressed) {
-            Sleep(250);
+            Sleep(1);
             if (GetAsyncKeyState(VK_RETURN) & 0x8000) {
                 init();
                 return;

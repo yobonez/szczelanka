@@ -10,7 +10,7 @@ int main()
 
     while(true) {
         game.tick();
-        Sleep(17); // 60 FPS
+        Sleep(10); // 100 FPS
     }
     return 0;
 }
