@@ -136,6 +136,7 @@ void TerminalEngine::handleMovement(){
 }
 
 void TerminalEngine::handleCollisions() {
+    if (visibleObjects->size() == 0) return;
     // Get player, enemies and bullets
     std::vector<VisualGameObject*> shipsToCheck;
     std::vector<Bullet*> bulletsChecking;
@@ -144,6 +145,7 @@ void TerminalEngine::handleCollisions() {
 
     for (int i = 0; i < visibleObjects->size(); i++) {
         VisualGameObject* obj = (*visibleObjects)[i];
+        std::string objName = obj->getDetailedName();
 
         std::array<short, 2> obj_XY = obj->getPos();
         std::array<short, 2> objSize = obj->getSize();
@@ -151,16 +153,16 @@ void TerminalEngine::handleCollisions() {
         if (obj_XY[0] > scr_W - objSize[0])
         {
             obj->setPos(obj_XY[0] - 1, obj_XY[1]);
-            if (obj->getDetailedName() == "Bullet") obj->dealDamage(100); continue;
+            if (objName == "Bullet") obj->dealDamage(100); continue;
         }
         if (obj_XY[0] < 0)
         {
             obj->setPos(obj_XY[0] + 1, obj_XY[1]);
-            if (obj->getDetailedName() == "Enemy") {
+            if (objName == "Enemy") {
                 obj->dealDamage(100);
                 shipsToCheck[0]->dealDamage(25); continue;
             }
-            if (obj->getDetailedName() == "Bullet") obj->dealDamage(100); continue;
+            if (objName == "Bullet") obj->dealDamage(100); continue;
         }
         if (obj_XY[1] >= scr_H - objSize[1]) obj->setPos(obj_XY[0], obj_XY[1] - 1);
         if (obj_XY[1] <= 0) obj->setPos(obj_XY[0], obj_XY[1] + 1);
@@ -168,8 +170,8 @@ void TerminalEngine::handleCollisions() {
 //        std::string debug = "Pos(x,y): " + std::to_string(obj_XY[0]) + " | " + std::to_string(obj_XY[1]);
 //        Utils::debugDisplay(debug, canvas);
 
-        if (obj->getDetailedName() == "Enemy") shipsToCheck.emplace_back(obj);
-        if (obj->getDetailedName() == "Bullet") bulletsChecking.emplace_back((Bullet*)obj->refer());
+        if (objName == "Enemy") shipsToCheck.emplace_back(obj);
+        if (objName == "Bullet") bulletsChecking.emplace_back((Bullet*)obj->refer());
     }
 
     // "ask" a bullet whether is it colliding with a player/enemy
@@ -200,6 +202,7 @@ void TerminalEngine::tick() {
         Utils::displayText2D(urDead, canvas, scr_W/2 - urDead.length(), scr_H/2, scr_W); draw(false);
 
         while(!keyPressed) {
+            Sleep(250);
             if (GetAsyncKeyState(VK_RETURN) & 0x8000) {
                 init();
                 return;
