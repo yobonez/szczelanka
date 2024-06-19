@@ -1,4 +1,3 @@
-#pragma once
 #include "TerminalEnginge.h"
 #include "GameObject.h"
 #include "Player.h"
@@ -40,6 +39,10 @@ void TerminalEngine::init() {
 }
 
 void TerminalEngine::doEvents() {
+    // tutaj musi byc sprawdzane sprawdzanie size(), bo tu ciagle nastepuja zmiany w rozmiarze.
+    // Jeszcze na szybko testowalem z updatowaniem zmiennej recznie po scene.purge() i po usuwaniu normalnie obiektow.
+    // Pewnie gdzies tutaj jest vector subscript out of range error, ale nie mam VS, zeby to sprawdzic,
+    // a CodeBlocks nie ma debuggera w sobie i nie chce mi sie go instalowac
     for(int i = 0; i < visibleObjects->size(); i++) {
         VisualGameObject* obj = (*visibleObjects)[i];
         if(obj->getDetailedName() == "Player" && obj->isDead())
@@ -62,9 +65,9 @@ void TerminalEngine::doEvents() {
         scene.createEnemy();
     }
 }
-
 void TerminalEngine::placePatternsOnCanvas() {
-    for (int i = 0; i < visibleObjects->size(); i++) {
+    int visibleObjCount = visibleObjects->size();
+    for (int i = 0; i < visibleObjCount; i++) {
         VisualGameObject* currentObject = (*visibleObjects)[i];
 
         std::array<short, 2> objectCoordinates = currentObject->getPos();
@@ -97,7 +100,7 @@ void TerminalEngine::placePatternsOnCanvas() {
             continue;
         }
 
-        for (int i = 0; i < objectPatternLength; i++) {
+        for (size_t i = 0; i < objectPatternLength; i++) {
             if (objectPattern[i] != L'`') {
                 canvas[coord_1D + rowCount + (scr_W * colCount)] = objectPattern[i];
                 rowCount++;
@@ -148,14 +151,15 @@ void TerminalEngine::handleMovement(){
 }
 
 void TerminalEngine::handleCollisions() {
-    if (visibleObjects->size() == 0) return;
+    short visibleObjCount = visibleObjects->size();
+    if (visibleObjCount == 0) return;
     // Get player, enemies and bullets
     std::vector<VisualGameObject*> shipsToCheck;
     std::vector<Bullet*> bulletsChecking;
 
     shipsToCheck.emplace_back((*visibleObjects)[0]);
 
-    for (int i = 0; i < visibleObjects->size(); i++) {
+    for (int i = 0; i < visibleObjCount; i++) {
         VisualGameObject* obj = (*visibleObjects)[i];
         std::string objName = obj->getDetailedName();
 
@@ -165,7 +169,7 @@ void TerminalEngine::handleCollisions() {
         if (obj_XY[0] > scr_W - objSize[0])
         {
             obj->setPos(obj_XY[0] - 1, obj_XY[1]);
-            if (objName == "Bullet") obj->dealDamage(100); continue;
+            if (objName == "Bullet") { obj->dealDamage(100); continue; }
         }
         if (obj_XY[0] < 0)
         {
@@ -174,7 +178,7 @@ void TerminalEngine::handleCollisions() {
                 obj->dealDamage(100);
                 shipsToCheck[0]->dealDamage(25); continue;
             }
-            if (objName == "Bullet") obj->dealDamage(100); continue;
+            if (objName == "Bullet") { obj->dealDamage(100); continue; }
         }
         if (obj_XY[1] >= scr_H - objSize[1]) obj->setPos(obj_XY[0], obj_XY[1] - 1);
         if (obj_XY[1] <= 0) obj->setPos(obj_XY[0], obj_XY[1] + 1);

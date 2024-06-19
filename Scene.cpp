@@ -29,30 +29,12 @@ void Scene::createEnemy() {
     short rnd_Y = (rand() % (ext_scrH/4)) + (ext_scrH/4);
     newEnemy->setPos(rnd_X, rnd_Y);
 
-//    bool canSpawn = true;
-//    if (enemyCount > 0) {
-//        canSpawn = false;
-//
-//        while(!canSpawn) {
-//            srand(time(NULL));
-//            short rnd_X = (rand() % 60) + 60;
-//            short rnd_Y = (rand() % 10) + 10;
-//            newEnemy->setPos(rnd_X, rnd_Y);
-//
-//            for(VisualGameObject* existingEnemy : m_VisualGameObjects) {
-//                if (existingEnemy->getDetailedName() != "Enemy") continue;
-//                if (!Utils::isIntersecting(newEnemy, existingEnemy)){
-//                    canSpawn = true;
-//                }
-//            }
-//        }
-//    }
 
     if (enemyCount > 4){
         delete newEnemy;
         return;
     }
-    /*if (canSpawn) */ m_VisualGameObjects.emplace_back(newEnemy);
+    m_VisualGameObjects.emplace_back(newEnemy);
 }
 
 void Scene::forwardPlayerActions(short& in_controls) {
